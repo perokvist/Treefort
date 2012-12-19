@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+    <metadata>
+        <id>Treefort.Commanding.Autofac</id>
+        <version>0.0.2-alpha</version>
+        <title>Treefort.Commanding.Autofac</title>
+        <authors>Per</authors>
+        <owners />
+        <licenseUrl>http://opensource.org/licenses/MS-PL</licenseUrl>
+        <requireLicenseAcceptance>false</requireLicenseAcceptance>
+        <description>Autofac infrastructure for Treefort.Commanding</description>
+        <dependencies>
+            <group targetFramework=".NETFramework4.5">
+                <dependency id="Treefort.Commanding" version="0.0.2-alpha" />
+                <dependency id="Autofac" version="2.6.3.862" />
+                <dependency id="Treefort.Common" version="0.0.1-alpha" />
+            </group>
+        </dependencies>
+    </metadata>
+    <files>
+        <file src="lib\net45\Treefort.Commanding.Autofac.dll" target="lib\net45\Treefort.Commanding.Autofac.dll" />
+    </files>
+</package>
