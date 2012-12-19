@@ -3,6 +3,12 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Treefort.Commanding", "Treefort.Commanding\Treefort.Commanding.csproj", "{DA03D66D-FDF9-41F1-BD48-71E6B972DE26}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Treefort.Entity", "Treefort.Entity\Treefort.Entity.csproj", "{6CCC8709-88B3-46FA-B1F8-4A9492699D73}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Treefort.Common", "Treefort.Common\Treefort.Common.csproj", "{6B78FBDB-7CFB-4ECF-BD89-D22D28A96B4F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Treefort.Commanding.Autofac", "Treefort.Commanding.Autofac\Treefort.Commanding.Autofac.csproj", "{DEDFE1EC-1E0F-4385-9339-02FEAD79CE62}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -13,6 +19,18 @@ Global
 		{DA03D66D-FDF9-41F1-BD48-71E6B972DE26}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DA03D66D-FDF9-41F1-BD48-71E6B972DE26}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DA03D66D-FDF9-41F1-BD48-71E6B972DE26}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6CCC8709-88B3-46FA-B1F8-4A9492699D73}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6CCC8709-88B3-46FA-B1F8-4A9492699D73}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6CCC8709-88B3-46FA-B1F8-4A9492699D73}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6CCC8709-88B3-46FA-B1F8-4A9492699D73}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6B78FBDB-7CFB-4ECF-BD89-D22D28A96B4F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6B78FBDB-7CFB-4ECF-BD89-D22D28A96B4F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6B78FBDB-7CFB-4ECF-BD89-D22D28A96B4F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6B78FBDB-7CFB-4ECF-BD89-D22D28A96B4F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DEDFE1EC-1E0F-4385-9339-02FEAD79CE62}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DEDFE1EC-1E0F-4385-9339-02FEAD79CE62}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DEDFE1EC-1E0F-4385-9339-02FEAD79CE62}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DEDFE1EC-1E0F-4385-9339-02FEAD79CE62}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
