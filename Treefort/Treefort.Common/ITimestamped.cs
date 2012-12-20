@@ -1,6 +1,6 @@
 using System;
 
-namespace Treefort.Entity
+namespace Treefort.Common
 {
     public interface ITimestamped
     {

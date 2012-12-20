@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+using System;
 using System.Data;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Treefort.Common;
 
-namespace Treefort.Entity
+namespace Treefort.Entity.Interceptors
 {
     public class CreatedAtSaveInterceptor : IContextSaveInterceptor
     {

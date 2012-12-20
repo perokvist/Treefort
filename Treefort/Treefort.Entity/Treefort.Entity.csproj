@@ -46,16 +46,26 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CreatedAtSaveInterceptor.cs" />
     <Compile Include="EntityNotFoundException.cs" />
-    <Compile Include="IContextSaveInterceptor.cs" />
-    <Compile Include="ITimestamped.cs" />
+    <Compile Include="Extensions\DbContextExtensions.cs" />
+    <Compile Include="Extensions\ObjectExtensions.cs" />
+    <Compile Include="Extensions\ReflectionExtensions.cs" />
+    <Compile Include="Interceptors\CreatedAtSaveInterceptor.cs" />
+    <Compile Include="Interceptors\ForceUtcSaveInterceptor.cs" />
+    <Compile Include="Interceptors\IContextSaveInterceptor.cs" />
+    <Compile Include="Interceptors\UpdateSaveInterceptor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UpdateSaveInterceptor.cs" />
+    <Compile Include="Validation\RequireUtcAttribute.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Treefort.Common\Treefort.Common.csproj">
+      <Project>{6B78FBDB-7CFB-4ECF-BD89-D22D28A96B4F}</Project>
+      <Name>Treefort.Common</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
