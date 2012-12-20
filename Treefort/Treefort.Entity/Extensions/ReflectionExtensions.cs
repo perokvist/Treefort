@@ -11,17 +11,17 @@ namespace Treefort.Entity.Extensions
     {
         public static object GetDateValue(this PropertyInfo p, object item)
         {
-            var dt = p.GetValue(item) as DateTime?;
-            if (!dt.HasValue)
+            var dt = item.Cast<DateTime?>();
+            if (dt == null)
                 return null;
-
-            var value = dt.GetValueOrDefault();
+            
+            var value = dt.Value;
 
             if (value.Kind == DateTimeKind.Local)
                 return value.ToUniversalTime();
 
             if (value.Kind == DateTimeKind.Unspecified)
-                throw new InvalidOperationException(string.Format("{0} is of Unspecified kind", p.Name));
+                return DateTime.SpecifyKind(value, DateTimeKind.Utc);
 
             return value;
         }

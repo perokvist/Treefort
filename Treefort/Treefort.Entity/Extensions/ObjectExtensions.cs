@@ -17,6 +17,10 @@ namespace Treefort.Entity.Extensions
                 .ForEach(p => p.SetValue(item, p.GetDateValue(item)));
         }
 
+        public static T Cast<T>(this object item) 
+        {
+            return ((T) item);
+        }
         
     }
 }
