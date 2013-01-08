@@ -62,9 +62,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Treefort.Common\Treefort.Common.csproj">
-      <Project>{6B78FBDB-7CFB-4ECF-BD89-D22D28A96B4F}</Project>
-      <Name>Treefort.Common</Name>
+    <ProjectReference Include="..\Treefort\Treefort.csproj">
+      <Project>{E67ACAFE-2F8F-49CE-8036-3DA59C69CB79}</Project>
+      <Name>Treefort</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

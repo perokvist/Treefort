@@ -6,8 +6,6 @@ using System.Data.Objects;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Treefort.Common;
-using Treefort.Common.Extensions;
 using Treefort.Entity.Interceptors;
 
 namespace Treefort.Entity.Extensions

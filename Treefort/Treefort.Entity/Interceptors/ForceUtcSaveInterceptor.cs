@@ -8,7 +8,7 @@ namespace Treefort.Entity.Interceptors
     {
         public void BeforeSave(System.Data.Entity.Infrastructure.DbChangeTracker tracker)
         {
-            tracker.Entries().ForEach(e => ObjectExtensions.ForceUtc(e.Entity));
+            tracker.Entries().ForEach(e => e.Entity.ForceUtc());
         }
 
         public void AfterSave()
