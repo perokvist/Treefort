@@ -55,6 +55,7 @@
     <Compile Include="Interceptors\IContextSaveInterceptor.cs" />
     <Compile Include="Interceptors\UpdateSaveInterceptor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Testing\FakeDbSet.cs" />
     <Compile Include="Validation\RequireUtcAttribute.cs" />
   </ItemGroup>
   <ItemGroup>
