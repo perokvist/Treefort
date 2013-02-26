@@ -1,16 +1,10 @@
 ﻿using Autofac;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
+using Treefort.Commanding;
 
-using Module = Autofac.Module;
-
-namespace Treefort.Commanding.Autofac
+namespace Treefort.AutofacIntegration
 {
-    public class DependencyModule : Module
+    public class DependencyModule : Autofac.Module
     {
         protected override void Load(ContainerBuilder builder)
         {

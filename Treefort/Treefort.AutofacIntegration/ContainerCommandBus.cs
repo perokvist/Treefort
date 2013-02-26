@@ -1,10 +1,10 @@
-﻿using System;
+﻿using Autofac;
+using System;
 using System.Collections.Generic;
-using System.Windows.Input;
-using Autofac;
+using Treefort.Commanding;
 using Treefort.Common.Extensions;
 
-namespace Treefort.Commanding.Autofac
+namespace Treefort.AutofacIntegration
 {
     public class ContainerCommandBus : ICommandBus
     {
@@ -35,4 +35,5 @@ namespace Treefort.Commanding.Autofac
         }
 
     }
+
 }

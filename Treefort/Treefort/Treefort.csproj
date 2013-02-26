@@ -47,7 +47,19 @@
     <Compile Include="Common\Extensions\EnumerableExtansions.cs" />
     <Compile Include="Common\Extensions\TypeExtensions.cs" />
     <Compile Include="Common\ITimestamped.cs" />
+    <Compile Include="Events\IEvent.cs" />
+    <Compile Include="Events\IEventListner.cs" />
+    <Compile Include="Events\IEventStore.cs" />
+    <Compile Include="Events\IEventStream.cs" />
+    <Compile Include="IApplicationService.cs" />
+    <Compile Include="Infrastructure\ApplicationService.cs" />
+    <Compile Include="Infrastructure\DelegatingEventStore.cs" />
+    <Compile Include="Common\Extensions\Extensions.cs" />
+    <Compile Include="Infrastructure\InMemoryEventStore.cs" />
+    <Compile Include="Infrastructure\InMemoryEventStream.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Read\EventListner.cs" />
+    <Compile Include="Read\IProjection.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
