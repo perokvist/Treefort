@@ -1,9 +1,10 @@
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Treefort.Events
 {
     public interface IEventListner
     {
-        void Receive(IEnumerable<IEvent> events);
+        Task ReceiveAsync(IEnumerable<IEvent> events);
     }
 }

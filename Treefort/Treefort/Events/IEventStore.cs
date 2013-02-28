@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Treefort.Events
 {
     public interface IEventStore
     {
-        void Store(Guid entityId, long version, IEnumerable<IEvent> events);
+        Task StoreAsync(Guid entityId, long version, IEnumerable<IEvent> events);
 
         IEventStream LoadEventStream(Guid entityId);
     }

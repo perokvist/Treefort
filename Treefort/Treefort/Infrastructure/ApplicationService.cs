@@ -1,4 +1,5 @@
-﻿using Treefort.Commanding;
+﻿using System.Threading.Tasks;
+using Treefort.Commanding;
 using Treefort.Common.Extensions;
 using Treefort.Events;
 namespace Treefort.Infrastructure
@@ -13,7 +14,7 @@ namespace Treefort.Infrastructure
             _eventStore = eventStore;
         }
 
-        public void Handle(ICommand command)
+        public async Task HandleAsync(ICommand command)
         {
             //TODO route commands
             
@@ -26,7 +27,7 @@ namespace Treefort.Infrastructure
             //Execute command
             var events = aggregate.Handle((dynamic)command);
             //Store events
-            _eventStore.Store(command.AggregateId, eventStream.Version + 1, events);
+            await _eventStore.StoreAsync(command.AggregateId, eventStream.Version + 1, events);
         }
     }
 

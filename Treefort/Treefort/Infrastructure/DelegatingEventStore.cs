@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Treefort.Common.Extensions;
 using Treefort.Events;
 
@@ -19,11 +20,11 @@ namespace Treefort.Infrastructure
             _eventListners = eventListners;
         }
 
-        public void Store(System.Guid entityId, long version, IEnumerable<IEvent> events)
+        public async Task StoreAsync(System.Guid entityId, long version, IEnumerable<IEvent> events)
         {
             var enumerableEvents = events as IEvent[] ?? events.ToArray();
-            _store.Store(entityId, version, enumerableEvents);
-            _eventListners.ForEach(el => el.Receive(enumerableEvents));
+            await _store.StoreAsync(entityId, version, enumerableEvents);
+            await Task.WhenAll(_eventListners.Select(el => el.ReceiveAsync(enumerableEvents)));
         }
 
         public IEventStream LoadEventStream(System.Guid entityId)

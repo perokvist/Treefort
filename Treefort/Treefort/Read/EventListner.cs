@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
-using Treefort.Common.Extensions;
+using System.Linq;
+using System.Threading.Tasks;
 using Treefort.Events;
 
 namespace Treefort.Read
@@ -13,9 +14,9 @@ namespace Treefort.Read
             _listerners = listerners;
         }
 
-        public void Receive(IEnumerable<IEvent> events)
+        public Task ReceiveAsync(IEnumerable<IEvent> events)
         {
-            _listerners.ForEach(l => events.ForEach(l.When));
+            return Task.WhenAll(events.SelectMany(e => _listerners.Select(l => l.WhenAsync(e))));
         }
     }
 }

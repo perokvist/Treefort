@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Treefort.Events;
 
 namespace Treefort.Infrastructure
@@ -14,7 +15,7 @@ namespace Treefort.Infrastructure
             _streams = new ConcurrentDictionary<Guid, IEventStream>();
         }
 
-        public void Store(System.Guid entityId, long version, System.Collections.Generic.IEnumerable<IEvent> events)
+        public async Task StoreAsync(System.Guid entityId, long version, System.Collections.Generic.IEnumerable<IEvent> events)
         {
             var eventStream = _streams.ContainsKey(entityId) ? _streams[entityId] : new InMemoryEventStream();
             eventStream.Version = eventStream.Version + 1;

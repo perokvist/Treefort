@@ -1,8 +1,9 @@
+using System.Threading.Tasks;
 using Treefort.Commanding;
 namespace Treefort
 {
     public interface IApplicationService
     {
-        void Handle(ICommand command);
+        Task HandleAsync(ICommand command);
     }
 }
