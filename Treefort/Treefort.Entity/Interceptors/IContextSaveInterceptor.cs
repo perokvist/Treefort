@@ -1,6 +1,6 @@
 using System.Data.Entity.Infrastructure;
 
-namespace Treefort.Entity.Interceptors
+namespace Treefort.EntityFramework.Interceptors
 {
     public interface IContextSaveInterceptor
     {

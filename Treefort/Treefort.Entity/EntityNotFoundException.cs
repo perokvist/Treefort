@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Treefort.Entity
+namespace Treefort.EntityFramework
 {
     public class EntityNotFoundException : Exception
     {

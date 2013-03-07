@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace Treefort.Events
 {
-    public interface IEventListner
+    public interface IEventListener
     {
         Task ReceiveAsync(IEnumerable<IEvent> events);
     }

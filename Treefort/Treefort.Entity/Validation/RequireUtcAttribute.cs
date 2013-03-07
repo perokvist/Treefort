@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Treefort.Entity.Validation
+namespace Treefort.EntityFramework.Validation
 {
     public class RequireUtcDateAttribute : ValidationAttribute
     {

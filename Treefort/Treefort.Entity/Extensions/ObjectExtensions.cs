@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using Treefort.Common.Extensions;
 
-namespace Treefort.Entity.Extensions
+namespace Treefort.EntityFramework.Extensions
 {
     public static class ObjectExtensions
     {

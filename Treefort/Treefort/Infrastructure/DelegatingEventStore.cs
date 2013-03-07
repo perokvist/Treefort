@@ -12,9 +12,9 @@ namespace Treefort.Infrastructure
     public class DelegatingEventStore : IEventStore
     {
         private readonly IEventStore _store;
-        private readonly IEnumerable<IEventListner> _eventListners;
+        private readonly IEnumerable<IEventListener> _eventListners;
 
-        public DelegatingEventStore(IEventStore store, IEnumerable<IEventListner> eventListners)
+        public DelegatingEventStore(IEventStore store, IEnumerable<IEventListener> eventListners)
         {
             _store = store;
             _eventListners = eventListners;
@@ -27,9 +27,9 @@ namespace Treefort.Infrastructure
             await Task.WhenAll(_eventListners.Select(el => el.ReceiveAsync(enumerableEvents)));
         }
 
-        public IEventStream LoadEventStream(System.Guid entityId)
+        public Task<IEventStream> LoadEventStreamAsync(System.Guid entityId)
         {
-            return _store.LoadEventStream(entityId);
+            return _store.LoadEventStreamAsync(entityId);
         }
     }
 }

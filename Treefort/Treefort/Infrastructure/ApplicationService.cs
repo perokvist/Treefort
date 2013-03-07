@@ -19,7 +19,7 @@ namespace Treefort.Infrastructure
             //TODO route commands
             
             //Load events
-            var eventStream = _eventStore.LoadEventStream(command.AggregateId);
+            var eventStream = await _eventStore.LoadEventStreamAsync(command.AggregateId);
             //Instantiate aggregate
             var aggregate = new TAggregate() as dynamic;
             //Replay events

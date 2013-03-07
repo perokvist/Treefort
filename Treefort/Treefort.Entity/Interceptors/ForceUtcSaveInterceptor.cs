@@ -1,8 +1,8 @@
 using System;
 using Treefort.Common.Extensions;
-using Treefort.Entity.Extensions;
+using Treefort.EntityFramework.Extensions;
 
-namespace Treefort.Entity.Interceptors
+namespace Treefort.EntityFramework.Interceptors
 {
     public class ForceUtcSaveInterceptor : IContextSaveInterceptor
     {

@@ -2,13 +2,10 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
-using System.Data.Objects;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Treefort.Entity.Interceptors;
+using Treefort.EntityFramework.Interceptors;
 
-namespace Treefort.Entity.Extensions
+namespace Treefort.EntityFramework.Extensions
 {
     public static class DbContextExtensions
     {

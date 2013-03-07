@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Treefort.Entity", "Treefort.Entity\Treefort.Entity.csproj", "{6CCC8709-88B3-46FA-B1F8-4A9492699D73}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Treefort.EntityFramework", "Treefort.Entity\Treefort.EntityFramework.csproj", "{6CCC8709-88B3-46FA-B1F8-4A9492699D73}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{61690859-182E-43B5-B562-6FD6EDBBFCCB}"
 	ProjectSection(SolutionItems) = preProject
@@ -17,6 +17,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nuget.Treefort", "Nuget.Treefort\Nuget.Treefort.csproj", "{0451BAEF-DF2E-4B98-8644-94EE9415E389}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NuGet", "NuGet", "{7957ED89-189F-4A5A-8F5D-9683A6120653}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nuget.Treefort.EntityFramework", "NuGet.Treefort.EntityFramework\Nuget.Treefort.EntityFramework.csproj", "{EB187226-9372-4252-808D-8DE7B12326E1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -40,11 +42,16 @@ Global
 		{0451BAEF-DF2E-4B98-8644-94EE9415E389}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0451BAEF-DF2E-4B98-8644-94EE9415E389}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0451BAEF-DF2E-4B98-8644-94EE9415E389}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EB187226-9372-4252-808D-8DE7B12326E1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EB187226-9372-4252-808D-8DE7B12326E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EB187226-9372-4252-808D-8DE7B12326E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EB187226-9372-4252-808D-8DE7B12326E1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{0451BAEF-DF2E-4B98-8644-94EE9415E389} = {7957ED89-189F-4A5A-8F5D-9683A6120653}
+		{EB187226-9372-4252-808D-8DE7B12326E1} = {7957ED89-189F-4A5A-8F5D-9683A6120653}
 	EndGlobalSection
 EndGlobal

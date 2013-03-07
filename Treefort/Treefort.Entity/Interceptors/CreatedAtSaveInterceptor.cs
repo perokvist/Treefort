@@ -3,8 +3,9 @@ using System.Data;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
 using Treefort.Common;
+using EntityState = System.Data.Entity.EntityState;
 
-namespace Treefort.Entity.Interceptors
+namespace Treefort.EntityFramework.Interceptors
 {
     public class CreatedAtSaveInterceptor : IContextSaveInterceptor
     {

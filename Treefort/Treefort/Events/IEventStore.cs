@@ -8,6 +8,6 @@ namespace Treefort.Events
     {
         Task StoreAsync(Guid entityId, long version, IEnumerable<IEvent> events);
 
-        IEventStream LoadEventStream(Guid entityId);
+        Task<IEventStream> LoadEventStreamAsync(Guid entityId);
     }
 }

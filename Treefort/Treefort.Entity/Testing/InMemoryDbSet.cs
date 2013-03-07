@@ -5,21 +5,19 @@ using System.Collections.ObjectModel;
 using System.Data.Entity;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Treefort.Entity.Testing
+namespace Treefort.EntityFramework.Testing
 {
-    public class FakeDbSet<T> : IDbSet<T> where T : class
+    public class InMemoryDbSet<T> : IDbSet<T> where T : class
     {
         private readonly List<T> _data;
 
-        public FakeDbSet()
+        public InMemoryDbSet()
         {
             _data = new List<T>();
         }
 
-        public FakeDbSet(params T[] entities)
+        public InMemoryDbSet(params T[] entities)
         {
             _data = new List<T>(entities);
         }
@@ -50,6 +48,11 @@ namespace Treefort.Entity.Testing
         }
 
         public T Find(params object[] keyValues)
+        {
+            throw new NotImplementedException("Wouldn't you rather use Linq .SingleOrDefault()?");
+        }
+
+        public System.Threading.Tasks.Task<T> FindAsync(System.Threading.CancellationToken cancellationToken, params object[] keyValues)
         {
             throw new NotImplementedException("Wouldn't you rather use Linq .SingleOrDefault()?");
         }
@@ -86,5 +89,7 @@ namespace Treefort.Entity.Testing
         {
             get { return new ObservableCollection<T>(_data); }
         }
+
+
     }
 }
