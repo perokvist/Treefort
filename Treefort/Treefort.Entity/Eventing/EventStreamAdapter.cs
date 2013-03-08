@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using Treefort.Common.Extensions;
 using Treefort.Events;
 using System;
 
@@ -23,13 +24,26 @@ namespace Treefort.EntityFramework.Eventing
         protected override void InsertItem(int index, IEvent item)
         {
             base.InsertItem(index, item);
-            _eventStream.Events.Add(new Event(_jsonConverter.SerializeObject(item), item.GetType()));
+            AddEvent(item);
         }
 
         protected override void SetItem(int index, IEvent item)
         {
             base.SetItem(index, item);
-            _eventStream.Events.Add(new Event(_jsonConverter.SerializeObject(item), item.GetType()));
+            AddEvent(item);
+        }
+
+        protected override void ClearItems()
+        {
+            base.ClearItems();
+            _eventStream.Events.Clear();
+        }
+
+        protected override void RemoveItem(int index)
+        {
+            var @event = Items[index];
+            base.RemoveItem(index);
+            _eventStream.Events.Remove((Event)@event);
         }
 
         public long EventCount
@@ -45,12 +59,12 @@ namespace Treefort.EntityFramework.Eventing
 
         public void AddRange(IEnumerable<IEvent> collection)
         {
-            var i = 0;
-            foreach (var @event in collection)
-            {
-                SetItem(i, @event);
-                i++;
-            }
+            collection.ForEach(Add);
+        }
+
+        private void AddEvent(IEvent item)
+        {
+            _eventStream.Events.Add(new Event(_jsonConverter.SerializeObject(item), item.GetType()));
         }
     }
 }
