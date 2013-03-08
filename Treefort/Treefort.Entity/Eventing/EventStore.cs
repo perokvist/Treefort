@@ -21,13 +21,13 @@ namespace Treefort.EntityFramework.Eventing
         public async Task<IEventStream> LoadEventStreamAsync(System.Guid entityId)
         {
             var stream = await _eventContext.Streams.SingleOrDefaultAsync(e => e.AggregateId == entityId) ??
-                         new EventStream() { Events = new Collection<Event>()};
+                         new EventStream();
             return _adapterFactory(stream);
         }
 
         public async Task StoreAsync(System.Guid entityId, long version, System.Collections.Generic.IEnumerable<IEvent> events)
         {
-            var stream = _eventContext.Streams.SingleOrDefault(s => s.AggregateId == entityId) ??
+            var stream = await _eventContext.Streams.SingleOrDefaultAsync(s => s.AggregateId == entityId) ??
                          _eventContext.Streams.Add(new EventStream() {AggregateId = entityId});
             var adapter = _adapterFactory(stream);
             adapter.Version = version;
