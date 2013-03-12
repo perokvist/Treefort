@@ -13,7 +13,7 @@ namespace Treefort.EntityFramework.Eventing
         public Event(string json, Type type)
         {
             this.Json = json;
-            Type = type.ToString();
+            Type = type.AssemblyQualifiedName;
         }
 
         public Guid Id { get; set; }
