@@ -53,10 +53,12 @@
     <Compile Include="EntityNotFoundException.cs" />
     <Compile Include="Eventing\Event.cs" />
     <Compile Include="Eventing\EventContext.cs" />
+    <Compile Include="Eventing\EventContextConfiguration.cs" />
     <Compile Include="Eventing\EventStore.cs" />
     <Compile Include="Eventing\EventStream.cs" />
     <Compile Include="Eventing\EventStreamAdapter.cs" />
     <Compile Include="Eventing\IEventContext.cs" />
+    <Compile Include="Eventing\AssemblyQualifiedNameTypeResolver.cs" />
     <Compile Include="Extensions\DbContextExtensions.cs" />
     <Compile Include="Extensions\ObjectExtensions.cs" />
     <Compile Include="Extensions\ReflectionExtensions.cs" />

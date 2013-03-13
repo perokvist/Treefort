@@ -51,6 +51,7 @@
     <Compile Include="Events\IEventListener.cs" />
     <Compile Include="Events\IEventStore.cs" />
     <Compile Include="Events\IEventStream.cs" />
+    <Compile Include="Events\IEventTypeResolver.cs" />
     <Compile Include="IApplicationService.cs" />
     <Compile Include="IJsonConverter.cs" />
     <Compile Include="Infrastructure\ApplicationService.cs" />
