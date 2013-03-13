@@ -18,18 +18,16 @@ namespace Treefort.EntityFramework.Eventing
             _adapterFactory = adapterFactory;
         }
 
-        public async Task<IEventStream> LoadEventStreamAsync(System.Guid entityId)
+        public Task<IEventStream> LoadEventStreamAsync(System.Guid entityId)
         {
-            var stream = await _eventContext.Streams.SingleOrDefaultAsync(e => e.AggregateId == entityId) ??
-                         new EventStream();
-            return _adapterFactory(stream);
+            return _eventContext.Streams.SingleOrDefaultAsync(e => e.AggregateId == entityId)
+                .ContinueWith(s => _adapterFactory(s.Result ?? new EventStream()));
         }
 
         public async Task StoreAsync(System.Guid entityId, long version, System.Collections.Generic.IEnumerable<IEvent> events)
         {
-            var stream = await _eventContext.Streams.SingleOrDefaultAsync(s => s.AggregateId == entityId) ??
-                         _eventContext.Streams.Add(new EventStream() {AggregateId = entityId});
-            var adapter = _adapterFactory(stream);
+            var stream = await _eventContext.Streams.SingleOrDefaultAsync(s => s.AggregateId == entityId);
+            var adapter = _adapterFactory(stream ?? _eventContext.Streams.Add(new EventStream() { AggregateId = entityId }));
             adapter.Version = version;
             adapter.AddRange(events);
             await _eventContext.SaveChangesAsync();

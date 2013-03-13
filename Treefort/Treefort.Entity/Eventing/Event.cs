@@ -14,10 +14,12 @@ namespace Treefort.EntityFramework.Eventing
         {
             this.Json = json;
             Type = type.AssemblyQualifiedName;
+            Created = DateTime.UtcNow;
         }
 
         public Guid Id { get; set; }
         public string Json { get; set; }
         public string Type { get; set; }
+        public DateTime Created { get; set; }
     }
 }

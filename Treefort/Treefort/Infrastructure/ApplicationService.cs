@@ -17,17 +17,21 @@ namespace Treefort.Infrastructure
         public async Task HandleAsync(ICommand command)
         {
             //TODO route commands
-            
+
             //Load events
-            var eventStream = await _eventStore.LoadEventStreamAsync(command.AggregateId);
+            var eventStream = await _eventStore
+                .LoadEventStreamAsync(command.AggregateId)
+                .ConfigureAwait(false);
             //Instantiate aggregate
             var aggregate = new TAggregate() as dynamic;
             //Replay events
-            eventStream.ForEach(e => aggregate.Handle((dynamic) e));
+            eventStream.ForEach(e => aggregate.Handle((dynamic)e));
             //Execute command
             var events = aggregate.Handle((dynamic)command);
             //Store events
-            await _eventStore.StoreAsync(command.AggregateId, eventStream.Version + 1, events);
+            await _eventStore
+                .StoreAsync(command.AggregateId, eventStream.Version + 1, events)
+                .ConfigureAwait(false);
         }
     }
 

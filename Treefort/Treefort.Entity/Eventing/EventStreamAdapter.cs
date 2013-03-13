@@ -17,7 +17,7 @@ namespace Treefort.EntityFramework.Eventing
             {
                 _eventStream = eventStream;
                 _jsonConverter = jsonConverter;
-                this.AddRange(_eventStream.Events
+                this.AddRange(_eventStream.Events.OrderBy(e => e.Created)
                     .Select(e => _jsonConverter.DeserializeObject(e.Json, Type.GetType(e.Type)))
                     .Cast<IEvent>()
                     .ToList());
