@@ -48,8 +48,9 @@ namespace Treefort.EntityFramework.Eventing
         protected override void RemoveItem(int index)
         {
             var @event = Items[index];
+            var e = _eventStream.Events.SingleOrDefault(ev => ev.CorrelationId == @event.CorrelationId);
             base.RemoveItem(index);
-            _eventStream.Events.Remove((Event)@event);
+            _eventStream.Events.Remove(e);
         }
 
         public long EventCount
@@ -71,7 +72,7 @@ namespace Treefort.EntityFramework.Eventing
         private void AddEvent(IEvent item)
         {
             if (_initialized)
-                _eventStream.Events.Add(new Event(_jsonConverter.SerializeObject(item), _eventTypeResolver.AsString(item.GetType()))); 
+                _eventStream.Events.Add(new Event(_jsonConverter.SerializeObject(item), _eventTypeResolver.AsString(item.GetType()), item.CorrelationId)); 
         }
     }
 }

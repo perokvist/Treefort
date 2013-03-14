@@ -6,6 +6,6 @@ namespace Treefort.Commanding
     {
         Guid AggregateId { get;  }
 
-        string CorrelationId { get; }
+        Guid CorrelationId { get; }
     }
 }

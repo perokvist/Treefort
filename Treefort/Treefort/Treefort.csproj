@@ -44,6 +44,8 @@
     <Compile Include="Commanding\ICommand.cs" />
     <Compile Include="Commanding\ICommandBus.cs" />
     <Compile Include="Commanding\ICommandHandler.cs" />
+    <Compile Include="Commanding\ICommandRouteConfiguration.cs" />
+    <Compile Include="Commanding\ICommandRoutes.cs" />
     <Compile Include="Common\Extensions\EnumerableExtansions.cs" />
     <Compile Include="Common\Extensions\TypeExtensions.cs" />
     <Compile Include="Common\ITimestamped.cs" />
@@ -55,6 +57,7 @@
     <Compile Include="IApplicationService.cs" />
     <Compile Include="IJsonConverter.cs" />
     <Compile Include="Infrastructure\ApplicationService.cs" />
+    <Compile Include="Infrastructure\CommandRoutes.cs" />
     <Compile Include="Infrastructure\DelegatingEventStore.cs" />
     <Compile Include="Common\Extensions\Extensions.cs" />
     <Compile Include="Infrastructure\InMemoryEventStore.cs" />
@@ -64,6 +67,8 @@
     <Compile Include="Read\IgnoreNonApplicableEvents.cs" />
     <Compile Include="Read\IgnoreNonApplicableEventsAsync.cs" />
     <Compile Include="Read\IProjection.cs" />
+    <Compile Include="Signaling\BroadcastingEventListener.cs" />
+    <Compile Include="Signaling\IBroadcast.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -1,7 +1,9 @@
+using System;
+
 namespace Treefort.Events
 {
     public interface IEvent
     {
-        string CorrelationId { get; }
+        Guid CorrelationId { get; set; }
     }
 }

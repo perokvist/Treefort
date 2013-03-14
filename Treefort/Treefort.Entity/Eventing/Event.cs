@@ -10,10 +10,11 @@ namespace Treefort.EntityFramework.Eventing
             
         }
 
-        public Event(string json, string type)
+        public Event(string json, string type, Guid correlationId)
         {
             this.Json = json;
             Type = type;
+            CorrelationId = correlationId;
             Created = DateTime.UtcNow;
         }
 
@@ -21,6 +22,6 @@ namespace Treefort.EntityFramework.Eventing
         public string Json { get; set; }
         public string Type { get; set; }
         public DateTime Created { get; set; }
-        public string CorrelationId { get; set; }
+        public Guid CorrelationId { get; set; }
     }
 }
