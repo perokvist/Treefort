@@ -37,15 +37,14 @@ namespace Treefort.Infrastructure
             
             //Execute command
             Action<IEvent> setCorrelation = e => e.CorrelationId = command.CorrelationId;
-            var events = EnumerableExtansions
-                .ForEach(aggregate.Handle((dynamic)command), setCorrelation) ;
-
+            var events = aggregate.Handle((dynamic)command);
+            EnumerableExtansions.ForEach(events, setCorrelation);
+            
             //Store events
             await _eventStore
                 .StoreAsync(command.AggregateId, eventStream.Version + 1, events)
                 .ConfigureAwait(false);
         }
     }
-
 
 }
