@@ -42,7 +42,7 @@ namespace Treefort.Infrastructure
             
             //Store events
             await _eventStore
-                .StoreAsync(command.AggregateId, eventStream.Version + 1, events)
+                .StoreAsync(command.AggregateId, eventStream.Version, events)
                 .ConfigureAwait(false);
         }
     }

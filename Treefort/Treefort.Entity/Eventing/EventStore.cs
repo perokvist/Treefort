@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
@@ -27,8 +28,12 @@ namespace Treefort.EntityFramework.Eventing
         public async Task StoreAsync(System.Guid entityId, long version, System.Collections.Generic.IEnumerable<IEvent> events)
         {
             var stream = await _eventContext.Streams.SingleOrDefaultAsync(s => s.AggregateId == entityId);
+            
+            if(version != stream.Version)
+                throw new OptimisticConcurrencyException("EventStream version is old");
+
             var adapter = _adapterFactory(stream ?? _eventContext.Streams.Add(new EventStream() { AggregateId = entityId }));
-            adapter.Version = version;
+            adapter.Version = version + 1;
             adapter.AddRange(events);
             await _eventContext.SaveChangesAsync();
         }
