@@ -28,11 +28,11 @@ namespace Treefort.EntityFramework.Eventing
         public async Task StoreAsync(System.Guid entityId, long version, System.Collections.Generic.IEnumerable<IEvent> events)
         {
             var stream = await _eventContext.Streams.SingleOrDefaultAsync(s => s.AggregateId == entityId);
-            
-            if(version != stream.Version)
-                throw new OptimisticConcurrencyException("EventStream version is old");
-
             var adapter = _adapterFactory(stream ?? _eventContext.Streams.Add(new EventStream() { AggregateId = entityId }));
+
+            if (version != adapter.Version)
+                throw new OptimisticConcurrencyException("Trying to update an old eventstream");
+
             adapter.Version = version + 1;
             adapter.AddRange(events);
             await _eventContext.SaveChangesAsync();
