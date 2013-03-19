@@ -61,6 +61,7 @@
     <Compile Include="Security\IPrincipalProvider.cs" />
     <Compile Include="Security\IRoleProvider.cs" />
     <Compile Include="Security\PrincipalProvider.cs" />
+    <Compile Include="Security\RequireHttpsAttribute.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
