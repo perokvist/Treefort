@@ -5,6 +5,7 @@ using Treefort.Common.Extensions;
 using Treefort.EntityFramework.Extensions;
 using Treefort.Events;
 using System;
+using Treefort.Infrastructure;
 
 namespace Treefort.EntityFramework.Eventing
 {

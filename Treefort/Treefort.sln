@@ -1,6 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio 2013
+VisualStudioVersion = 12.0.20827.3
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Treefort.EntityFramework", "Treefort.Entity\Treefort.EntityFramework.csproj", "{6CCC8709-88B3-46FA-B1F8-4A9492699D73}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{61690859-182E-43B5-B562-6FD6EDBBFCCB}"
@@ -11,8 +13,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{616908
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Treefort", "Treefort\Treefort.csproj", "{E67ACAFE-2F8F-49CE-8036-3DA59C69CB79}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Treefort.AutofacIntegration", "Treefort.AutofacIntegration\Treefort.AutofacIntegration.csproj", "{208AB988-548C-4B42-80B7-9F114A0BB9C6}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nuget.Treefort", "Nuget.Treefort\Nuget.Treefort.csproj", "{0451BAEF-DF2E-4B98-8644-94EE9415E389}"
 EndProject
@@ -38,10 +38,6 @@ Global
 		{E67ACAFE-2F8F-49CE-8036-3DA59C69CB79}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E67ACAFE-2F8F-49CE-8036-3DA59C69CB79}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E67ACAFE-2F8F-49CE-8036-3DA59C69CB79}.Release|Any CPU.Build.0 = Release|Any CPU
-		{208AB988-548C-4B42-80B7-9F114A0BB9C6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{208AB988-548C-4B42-80B7-9F114A0BB9C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{208AB988-548C-4B42-80B7-9F114A0BB9C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{208AB988-548C-4B42-80B7-9F114A0BB9C6}.Release|Any CPU.Build.0 = Release|Any CPU
 		{0451BAEF-DF2E-4B98-8644-94EE9415E389}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{0451BAEF-DF2E-4B98-8644-94EE9415E389}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0451BAEF-DF2E-4B98-8644-94EE9415E389}.Release|Any CPU.ActiveCfg = Release|Any CPU

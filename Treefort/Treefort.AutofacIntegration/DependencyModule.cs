@@ -12,7 +12,7 @@ namespace Treefort.AutofacIntegration
                 .PreserveExistingDefaults()
                 .AsImplementedInterfaces();
 
-            builder.RegisterGeneric(typeof(CommandHandlerFacade<>));
+            //builder.RegisterGeneric(typeof(CommandHandlerFacade<>));
         }
     }
 }

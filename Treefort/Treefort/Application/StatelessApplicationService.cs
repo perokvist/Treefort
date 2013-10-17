@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Treefort.Commanding;
 using Treefort.Common.Extensions;
 using Treefort.Events;
+using Treefort.Infrastructure;
 
 namespace Treefort.Application
 {
