@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Linq;
-using Treefort.Common.Extensions;
+using Treefort.Common;
 
 namespace Treefort.EntityFramework.Extensions
 {

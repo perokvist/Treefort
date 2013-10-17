@@ -1,5 +1,5 @@
 using System;
-using Treefort.Common.Extensions;
+using Treefort.Common;
 using Treefort.EntityFramework.Extensions;
 
 namespace Treefort.EntityFramework.Interceptors

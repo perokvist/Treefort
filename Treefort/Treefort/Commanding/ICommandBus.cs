@@ -1,10 +1,12 @@
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using Treefort.Messaging;
 
 namespace Treefort.Commanding
 {
     public interface ICommandBus
     {
-        void Send(Envelope<ICommand> command);
+        Task SendAsync(Envelope<ICommand> command);
         void Send(IEnumerable<Envelope<ICommand>> commands);
     }
 }

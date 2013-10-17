@@ -1,10 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using Treefort.Common.Extensions;
+using Treefort.Common;
 using Treefort.EntityFramework.Extensions;
 using Treefort.Events;
 using System;
+using Treefort.Infrastructure;
 
 namespace Treefort.EntityFramework.Eventing
 {

@@ -23,5 +23,6 @@ namespace Treefort.EntityFramework.Eventing
         public string Type { get; set; }
         public DateTime Created { get; set; }
         public Guid CorrelationId { get; set; }
+        public Guid SourceId { get; private set; }
     }
 }
