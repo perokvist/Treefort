@@ -20,13 +20,12 @@ namespace Treefort.Application
         public Task DispatchAsync(ICommand command)
         {
             _logger.Info(string.Format("Server Dispatches command {0} ({1})", command, command.CorrelationId));
-
             //TODO this need to be awaited to run ?
             return Task.Run(() =>
                                 {
                                     _commandRouter
                                     .GetServiceFor(command)
-                                    .HandleAsync(command);
+                                    .HandleAsync(command); //Warning concurrency problems ahead
                                 });
         }
     }
