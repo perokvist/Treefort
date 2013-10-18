@@ -7,7 +7,7 @@ using Treefort.Application;
 
 namespace Treefort.Azure
 {
-    public class CommandProcessor
+    public class CommandProcessor : IProcessor
     {
         private readonly IMessageReceiver _messageReceiver;
         private readonly ICommandRouter _commandRouter;
@@ -42,32 +42,15 @@ namespace Treefort.Azure
             {
                 using (var reader = new StreamReader(stream))
                 {
-                    try
-                    {
-                        payload = _serializer.Deserialize(reader);
-                    }
-                    catch (SerializationException e)
-                    {
-                        throw;
-                        //return MessageReleaseAction.DeadLetterMessage(e.Message, e.ToString());
-                    }
+                    payload = _serializer.Deserialize(reader);
+                    //TODO deadletter
                 }
             }
 
-            try
-            {
-                var command = payload as Treefort.Commanding.ICommand;
-                return _commandRouter
-                    .GetServiceFor(command)
-                    .HandleAsync(command);
-            }
-            catch (Exception e)
-            {
-                //return HandleProcessingException(message, traceIdentifier, e);
-            }
-
-            //return CompleteMessage(message, traceIdentifier);
-            return null;
+            var command = payload as Treefort.Commanding.ICommand;
+            return _commandRouter
+                .GetServiceFor(command)
+                .HandleAsync(command);
         }
     }
 }

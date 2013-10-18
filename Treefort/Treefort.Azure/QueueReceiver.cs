@@ -1,5 +1,9 @@
 ﻿using System;
+using System.Runtime.CompilerServices;
+using System.Runtime.Serialization;
+using System.ServiceModel.Channels;
 using System.Threading.Tasks;
+using Microsoft.ServiceBus;
 using Microsoft.ServiceBus.Messaging;
 
 namespace Treefort.Azure
@@ -16,7 +20,22 @@ namespace Treefort.Azure
         public void Start(Func<BrokeredMessage, Task> messageHandler)
         {
             var options = new OnMessageOptions {MaxConcurrentCalls = 1};
+            //_client.RetryPolicy = new RetryExponential();
+            options.ExceptionReceived += (sender, args) => OnException(sender as BrokeredMessage, (dynamic) args.Exception);
             _client.OnMessageAsync(messageHandler, options);
+        }
+
+        private void OnException(BrokeredMessage message, SerializationException exception)
+        {
+            throw new NotImplementedException();
+            //message.DeadLetterAsync()
+        }
+
+
+        private void OnException(object sender, Exception exception)
+        {
+            if (exception != null)
+                throw exception;
         }
 
         public Task StopAsync()
