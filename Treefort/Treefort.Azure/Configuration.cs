@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.ServiceBus.Messaging;
 using Treefort.Application;
 using Treefort.Azure.Commanding;
 using Treefort.Azure.Events;
@@ -43,23 +44,50 @@ namespace Treefort.Azure
             Func<IEnumerable<IEventListener>> eventListenersFactory)
         {
             var logger = new ConsoleLogger();
-            var eventPublisher = new EventPublisher(eventListenersFactory(), 
-                new ReceptorSubject(Enumerable.Empty<IReceptor>(), logger), logger);
+            var eventPublisher = new EventPublisher(eventListenersFactory(), logger);
             var observableEventStore = new ObservableEventStore(eventStoreFactory());
             var router = routerFactory(logger, appServiceFactories.Select(fac => fac(observableEventStore, eventPublisher)));
             var processor =  new CommandProcessor(messageReceiverFactory(), router, serializerFactory());
             var commandBus = new CommandBus(messageSenderFactory(), new JsonTextSerializer());
             observableEventStore.Subscribe(eventPublisher);
-            eventPublisher.Subscribe(cmd => commandBus.SendAsync(new Envelope<ICommand>(cmd))); //TODO cmd -> envelope 
+            //eventPublisher.Subscribe(cmd => commandBus.SendAsync(new Envelope<ICommand>(cmd))); //TODO cmd -> envelope 
             return processor;
         }
 
-        public static IProcessor EventProcessor(Func<IEnumerable<IReceptor>> receptors)
+        public static IEnumerable<IProcessor> Start(Func<ILogger, IEnumerable<IApplicationService>, ICommandRouter> routerFactory, 
+            Func<IEventStore> eventStoreFactory, 
+            IEnumerable<Func<IEventStore, IEventPublisher, IApplicationService>> appServiceFactories, 
+            Func<IMessageReceiver> messageReceiverFactory,
+            Func<IMessageSender> messageSenderFactory,
+            Func<ITextSerializer> serializerFactory,
+            Func<IEnumerable<IEventListener>> eventListenersFactory)
         {
-         return new EventProcessor(
-             new SubscriptionReceiver("Events", "EventSubscription"), 
-             new EventPublisher(null, new ReceptorSubject(receptors(), new ConsoleLogger()), new ConsoleLogger()),
-             new JsonTextSerializer());   
-        }
+            var logger = new ConsoleLogger();
+
+            var serializer = new JsonTextSerializer();
+            var eventBus = new EventBus(new TopicSender("Events"), serializer);
+            var eventBusListener = new EventBusEventListener(eventBus);
+            var eventPublisher = new EventPublisher(new List<IEventListener> { eventBusListener }, logger);
+
+            var eventReciever = new SubscriptionReceiver("Events", "EventSubscription");
+            var eventProcessor = new EventProcessor(eventReciever, eventPublisher, serializer);
+
+            var receptors = new ReceptorSubject(Enumerable.Empty<IReceptor>(), logger);
+    
+            var observableEventStore = new ObservableEventStore(eventStoreFactory());
+            var router = routerFactory(logger, appServiceFactories.Select(fac => fac(observableEventStore, eventPublisher)));
+            var commandProcessor = new CommandProcessor(messageReceiverFactory(), router, serializerFactory());
+            var commandBus = new CommandBus(messageSenderFactory(), serializer);
+        
+            observableEventStore.Subscribe(eventPublisher);
+            eventPublisher.Subscribe(receptors);
+            receptors.Subscribe(command => commandBus.SendAsync(new Envelope<ICommand>(command)));//TODO cmd -> envelope 
+
+            return new IProcessor[]
+            {
+                eventProcessor, commandProcessor
+            };
+        } 
+
     }
 }

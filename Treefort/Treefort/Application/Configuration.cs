@@ -28,12 +28,14 @@ namespace Treefort.Application
         {
             var logger = new ConsoleLogger();
             var eventListner = new EventListener(projections());
-            var eventPublisher = new EventPublisher(new List<IEventListener> { eventListner }, new ReceptorSubject(receptors(), logger), logger);
+            var eventPublisher = new EventPublisher(new List<IEventListener> { eventListner }, logger);
+            var receptorSubject = new ReceptorSubject(receptors(), logger);
             var observableEventStore = new ObservableEventStore(eventStoreFactory());
             var router = routerFactory(logger, appServiceFactories.Select(fac => fac(observableEventStore, eventPublisher))); 
             var appServer = new ApplicationServer(router, logger);
             observableEventStore.Subscribe(eventPublisher);
-            eventPublisher.Subscribe(cmd => appServer.DispatchAsync(cmd));
+            eventPublisher.Subscribe(receptorSubject);
+            receptorSubject.Subscribe(cmd => appServer.DispatchAsync(cmd));
             return appServer;
         }
     }

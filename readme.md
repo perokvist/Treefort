@@ -32,7 +32,7 @@ var appServer = Configuration.InMemory(
 - Azure CommandBus - Done 1st it.
 - EventBus - Done 1st it.
 - No Projections in Azure Config - Done.
-- Evevelope "builder" cms -> envelope -> Done. BuildMessage
+- Enevelope "builder" cms -> envelope -> Done. BuildMessage
 - EventProcessor - Done 1st it.
 - Command Retry
 - Integration test for Azure

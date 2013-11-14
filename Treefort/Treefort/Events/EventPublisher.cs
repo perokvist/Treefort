@@ -14,18 +14,15 @@ namespace Treefort.Events
     public class EventPublisher : IEventPublisher
     {
         private readonly IEnumerable<IEventListener> _eventListeners;
-        private readonly ISubject<IEvent, ICommand> _receptors;
         private readonly ILogger _logger;
-        private readonly ISubject<ICommand> _subject;
+        private Subject<IEvent> _subject;
 
         //NOTE beware of Autofac IDisposabe With ISubject
-        public EventPublisher(IEnumerable<IEventListener> eventListeners, ISubject<IEvent, ICommand> receptors, ILogger logger)
+        public EventPublisher(IEnumerable<IEventListener> eventListeners, ILogger logger)
         {
             _eventListeners = eventListeners;
-            _receptors = receptors;
             _logger = logger;
-            _subject = new Subject<ICommand>(); //TODO move receptors to bootstrapping instead ?
-            _receptors.Subscribe(_subject);
+            _subject = new Subject<IEvent>();
         }
 
         void IObserver<IEvent>.OnCompleted()
@@ -39,14 +36,13 @@ namespace Treefort.Events
         void IObserver<IEvent>.OnNext(IEvent value)
         {
             _logger.Info(string.Format("Publisher Received {0} ({1})", value, value.CorrelationId));
-            _receptors.OnNext(value); //TODO fix this ugly solution
             _eventListeners.ForEach(el => el.ReceiveAsync(new[] { value })); //TODO possible to group by correlation
+            _subject.OnNext(value);
         }
 
-        IDisposable IObservable<ICommand>.Subscribe(IObserver<ICommand> observer)
+        public IDisposable Subscribe(IObserver<IEvent> observer)
         {
             return _subject.Subscribe(observer);
         }
-
     }
 }

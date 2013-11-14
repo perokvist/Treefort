@@ -5,7 +5,7 @@ using Treefort.Commanding;
 
 namespace Treefort.Events
 {
-    public interface IEventPublisher : ISubject<IEvent, ICommand>
+    public interface IEventPublisher : ISubject<IEvent>
     {
     }
 
