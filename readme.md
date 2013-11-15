@@ -34,9 +34,10 @@ var appServer = Configuration.InMemory(
 - No Projections in Azure Config - Done.
 - Enevelope "builder" cms -> envelope -> Done. BuildMessage
 - EventProcessor - Done 1st it.
+- OnMessage should guarantee events persisted, but not dispatched 1st scope.
+- OnMessage should guarantee events "handeled" but not receportor command dispatchement 1st scope.
 - Command Retry
 - Integration test for Azure
 - MetaDataProvider
 - JsonConverter -> TextSerializer
-- Processors as Observable
 - Remove / Make AppService "functional" return events
