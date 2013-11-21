@@ -1,10 +1,12 @@
-﻿using Treefort.Commanding;
+﻿using System;
+using System.Threading.Tasks;
+using Treefort.Commanding;
 using Treefort.Domain;
 
 namespace Treefort.Application
 {
     public interface ICommandRouter
     {
-        IApplicationService GetServiceFor<T>(T command) where T : ICommand;
+        Func<ICommand, Task> GetHandler<T>(T command) where T : ICommand;
     }
 }

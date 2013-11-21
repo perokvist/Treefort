@@ -5,11 +5,11 @@ using Treefort.Events;
 
 namespace Treefort.Read
 {
-    public class EventListener : IEventListener
+    public class ProjectionEventListener : IEventListener
     {
         private readonly IEnumerable<IProjection> _listerners;
 
-        public EventListener(IEnumerable<IProjection> listerners)
+        public ProjectionEventListener(IEnumerable<IProjection> listerners)
         {
             _listerners = listerners;
         }

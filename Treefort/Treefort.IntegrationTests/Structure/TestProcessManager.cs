@@ -28,19 +28,19 @@ namespace Treefort.IntegrationTests.Structure
             return Task.FromResult(new object());
         }
 
-        public ICommand When(IEvent @event)
+        public Task<ICommand> MapAsync(IEvent @event)
         {
             return When((dynamic) @event);
         }
 
-        public ICommand When(dynamic @event)
+        public Task<ICommand> When(dynamic @event)
         {
-            return null;
+            return Task.FromResult<ICommand>(null);
         }
 
-        public ICommand When(TestEventThree @event)
+        public Task<ICommand> When(TestEventThree @event)
         {
-            return null;
+            return Task.FromResult<ICommand>(null);
         }
 
     }

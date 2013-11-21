@@ -1,10 +1,11 @@
-﻿using Treefort.Commanding;
+﻿using System.Threading.Tasks;
+using Treefort.Commanding;
 using Treefort.Events;
 
 namespace Treefort.Domain
 {
     public interface IReceptor 
     {
-        ICommand When(IEvent @event);
+        Task<ICommand> MapAsync(IEvent @event);
     }
 }

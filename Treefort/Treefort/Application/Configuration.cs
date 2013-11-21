@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Treefort.Commanding;
 using Treefort.Common;
 using Treefort.Domain;
 using Treefort.Events;
@@ -27,15 +28,15 @@ namespace Treefort.Application
         public static IApplicationServer WithEventStore(Func<ILogger, IEnumerable<IApplicationService>, ICommandRouter> routerFactory, Func<IEventStore> eventStoreFactory, IEnumerable<Func<IEventStore, IEventPublisher, IApplicationService>> appServiceFactories, Func<IEnumerable<IProjection>> projections, Func<IEnumerable<IReceptor>> receptors)
         {
             var logger = new ConsoleLogger();
-            var eventListner = new EventListener(projections());
-            var eventPublisher = new EventPublisher(new List<IEventListener> { eventListner }, logger);
-            var receptorSubject = new ReceptorSubject(receptors(), logger);
-            var observableEventStore = new ObservableEventStore(eventStoreFactory());
-            var router = routerFactory(logger, appServiceFactories.Select(fac => fac(observableEventStore, eventPublisher))); 
+            var eventListeners = new List<IEventListener>
+            {
+                new ProjectionEventListener(projections())
+            };
+            var eventPublisher = new EventPublisher(eventListeners, logger);
+            var publishingEventStore = new PublishingEventStore(eventStoreFactory(), eventPublisher);
+            var router = routerFactory(logger, appServiceFactories.Select(fac => fac(publishingEventStore, eventPublisher)));
             var appServer = new ApplicationServer(router, logger);
-            observableEventStore.Subscribe(eventPublisher);
-            eventPublisher.Subscribe(receptorSubject);
-            receptorSubject.Subscribe(cmd => appServer.DispatchAsync(cmd));
+            eventListeners.Add(new ReceptorListener(receptors(), appServer));
             return appServer;
         }
     }

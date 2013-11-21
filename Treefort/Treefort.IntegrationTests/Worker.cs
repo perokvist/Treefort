@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using NUnit.Framework;
 using Treefort.Application;
 using Treefort.Azure;
+using Treefort.Common;
 using Treefort.Domain;
 using Treefort.Events;
 using Treefort.IntegrationTests.Structure;
@@ -15,28 +16,26 @@ namespace Treefort.IntegrationTests
     {
 
         private TestReceptor _receptor;
-        private IProcessor _commandProcessor;
+        private IEnumerable<IProcessor> _processors;
 
         [SetUp]
         public void Setup()
         {
 
             _receptor = new TestReceptor();
-            _commandProcessor = Configuration.CommandProcessorInMemory(
+            var ps = Configuration.StartInMemory(
                 new List<Func<IEventStore, IEventPublisher, IApplicationService>>
-                    {
-                        (es, ep) => new TestApplicationService(ep),
-                        (es, ep) => new ProcessApplicationService(es)
-                    }
-              );
+                {
+                    (es, ep) => new TestApplicationService(ep),
+                    (es, ep) => new ProcessApplicationService(es)
+                });
         }
 
         [Test]
         public void name()
         {
             //Arrange
-            _commandProcessor.Start();
-
+            _processors.ForEach(p => p.Start());
             //Act
 
             //Assert

@@ -13,20 +13,11 @@ namespace Treefort.IntegrationTests.Structure
     {
         public bool Touched { get; set; }
 
-        public ICommand When(IEvent @event)
+        public Task<ICommand> MapAsync(IEvent @event)
         {
             Touched = true;
-            return On((dynamic) @event);
+            return Task.FromResult<ICommand>(null);
         }
 
-        public ICommand On(dynamic @event)
-        {
-            return null;
-        }
-
-        public ICommand On(TestEvent @event)
-        {
-            return new TestCommandTwo();
-        }
     }
 }

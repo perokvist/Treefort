@@ -50,8 +50,7 @@ namespace Treefort.Azure.Commanding
 
             var command = payload as Treefort.Commanding.ICommand;
             return _commandRouter
-                .GetServiceFor(command)
-                .HandleAsync(command);
+                .GetHandler(command)(command);
         }
     }
 }

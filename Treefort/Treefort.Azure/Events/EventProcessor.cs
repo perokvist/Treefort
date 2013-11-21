@@ -1,7 +1,4 @@
 ﻿using System.IO;
-using System.Reactive.Linq;
-using System.Reactive.Subjects;
-using System.Reactive.Threading.Tasks;
 using System.Threading.Tasks;
 using Microsoft.ServiceBus.Messaging;
 using Treefort.Azure.Messaging;
@@ -17,7 +14,7 @@ namespace Treefort.Azure.Events
         private readonly ITextSerializer _serializer;
 
         public EventProcessor(
-            IMessageReceiver messageReceiver, 
+            IMessageReceiver messageReceiver,
             IEventPublisher eventPublisher,
             ITextSerializer serializer)
         {
@@ -39,23 +36,18 @@ namespace Treefort.Azure.Events
 
         private Task HandleEventAsync(BrokeredMessage message)
         {
-            return Task.Run(() =>
+            object payload;
+
+            using (var stream = message.GetBody<Stream>())
             {
-                object payload;
-
-                using (var stream = message.GetBody<Stream>())
+                using (var reader = new StreamReader(stream))
                 {
-                    using (var reader = new StreamReader(stream))
-                    {
-                        payload = _serializer.Deserialize(reader);
-                        //TODO deadletter
-                    }
+                    payload = _serializer.Deserialize(reader);
+                    //TODO deadletter
                 }
-
-                var p = payload as IEvent;
-
-                Observable.Start(() => p).Subscribe(_eventPublisher);
-            });
+            }
+            var p = payload as IEvent;
+            return _eventPublisher.PublishAsync(p);
         }
     }
 }

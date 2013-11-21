@@ -1,12 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reactive;
-using System.Reactive.Linq;
-using System.Reactive.Subjects;
 using System.Threading.Tasks;
-using Treefort.Commanding;
-using Treefort.Common;
 using Treefort.Infrastructure;
 
 namespace Treefort.Events
@@ -15,34 +10,26 @@ namespace Treefort.Events
     {
         private readonly IEnumerable<IEventListener> _eventListeners;
         private readonly ILogger _logger;
-        private Subject<IEvent> _subject;
 
         //NOTE beware of Autofac IDisposabe With ISubject
         public EventPublisher(IEnumerable<IEventListener> eventListeners, ILogger logger)
         {
             _eventListeners = eventListeners;
             _logger = logger;
-            _subject = new Subject<IEvent>();
+        }
+        
+        public Task PublishAsync(IEvent @event)
+        {
+            _logger.Info(string.Format("Publisher Received {0} ({1})", @event, @event.CorrelationId));
+            return PublishAsync(new[] {@event});
         }
 
-        void IObserver<IEvent>.OnCompleted()
+        public Task PublishAsync(IEnumerable<IEvent> events)
         {
-        }
-
-        void IObserver<IEvent>.OnError(Exception error)
-        {
-        }
-
-        void IObserver<IEvent>.OnNext(IEvent value)
-        {
-            _logger.Info(string.Format("Publisher Received {0} ({1})", value, value.CorrelationId));
-            _eventListeners.ForEach(el => el.ReceiveAsync(new[] { value })); //TODO possible to group by correlation
-            _subject.OnNext(value);
-        }
-
-        public IDisposable Subscribe(IObserver<IEvent> observer)
-        {
-            return _subject.Subscribe(observer);
+            var publishTasks = _eventListeners
+                .Select(x => x.ReceiveAsync(events))
+                .ToList();
+            return Task.WhenAll(publishTasks);
         }
     }
 }

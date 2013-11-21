@@ -1,12 +1,13 @@
-﻿using System;
-using System.Reactive.Subjects;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using Treefort.Commanding;
 
 namespace Treefort.Events
 {
-    public interface IEventPublisher : ISubject<IEvent>
+    public interface IEventPublisher 
     {
+        Task PublishAsync(IEvent @event);
+        Task PublishAsync(IEnumerable<IEvent> events);
+
     }
 
 }

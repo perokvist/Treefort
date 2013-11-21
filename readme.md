@@ -28,16 +28,13 @@ var appServer = Configuration.InMemory(
 
 #TODO
 
-- InMemory CommandBus - Done AppServer impl.
-- Azure CommandBus - Done 1st it.
-- EventBus - Done 1st it.
-- No Projections in Azure Config - Done.
 - Enevelope "builder" cms -> envelope -> Done. BuildMessage
-- EventProcessor - Done 1st it.
-- OnMessage should guarantee events persisted, but not dispatched 1st scope.
-- OnMessage should guarantee events "handeled" but not receportor command dispatchement 1st scope.
+- OnMessage should guarantee events persisted - Both guaranteed in same Task, not optional but ok, 1st itr.
+- OnMessage should guarantee events "handeled" - Both EventListener and Receptors Async, so OnMesage Wais for task to complete.
 - Command Retry
 - Integration test for Azure
 - MetaDataProvider
 - JsonConverter -> TextSerializer
-- Remove / Make AppService "functional" return events
+
+
+
