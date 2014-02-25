@@ -44,7 +44,7 @@ namespace Treefort.WebApi.Security
                                              , BasicAuthResponseHeaderValue);
                     }
                     return response;
-                });
+                }, cancellationToken);
         }
 
         private static Credentials ParseAuthorizationHeader(string authHeader)

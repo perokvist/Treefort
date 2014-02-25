@@ -22,13 +22,13 @@ namespace Treefort.IntegrationTests
         public void Setup()
         {
 
-            _receptor = new TestReceptor();
-            var ps = Configuration.StartInMemory(
-                new List<Func<IEventStore, IEventPublisher, IApplicationService>>
-                {
-                    (es, ep) => new TestApplicationService(ep),
-                    (es, ep) => new ProcessApplicationService(es)
-                });
+            //_receptor = new TestReceptor();
+            //var ps = Configuration.StartInMemory(
+            //    new List<Func<IEventStore, IEventPublisher, IApplicationService>>
+            //    {
+            //        (es, ep) => new TestApplicationService(ep),
+            //        (es, ep) => new ProcessApplicationService(es)
+            //    });
         }
 
         [Test]

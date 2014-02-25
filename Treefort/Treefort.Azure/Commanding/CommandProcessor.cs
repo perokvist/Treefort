@@ -4,6 +4,7 @@ using Microsoft.ServiceBus.Messaging;
 using Treefort.Application;
 using Treefort.Azure.Infrastructure;
 using Treefort.Azure.Messaging;
+using Treefort.Commanding;
 using Treefort.Infrastructure;
 
 namespace Treefort.Azure.Commanding
@@ -11,16 +12,16 @@ namespace Treefort.Azure.Commanding
     public class CommandProcessor : IProcessor
     {
         private readonly IMessageReceiver _messageReceiver;
-        private readonly ICommandRouter _commandRouter;
         private readonly ITextSerializer _serializer;
+        private readonly ICommandDispatcher _commandRouter;
 
         public CommandProcessor(
             IMessageReceiver messageReceiver,
-            ICommandRouter commandRouter,
+            ICommandDispatcher commandDisptacher,
             ITextSerializer serializer)
         {
             _messageReceiver = messageReceiver;
-            _commandRouter = commandRouter;
+            _commandRouter = commandDisptacher;
             _serializer = serializer;
         }
 
@@ -48,9 +49,9 @@ namespace Treefort.Azure.Commanding
                 }
             }
 
-            var command = payload as Treefort.Commanding.ICommand;
+            var command = payload as ICommand;
             return _commandRouter
-                .GetHandler(command)(command);
+                .DispatchAsync(command);
         }
     }
 }

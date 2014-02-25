@@ -14,7 +14,7 @@ namespace Treefort.IntegrationTests
     [TestFixture]
     public class ApplicationServerWithInMemoryConfiguration
     {
-        private IApplicationServer _appServer;
+        private ICommandDispatcher _appServer;
         private TestProjection _projection;
         private TestReceptor _receptor;
 

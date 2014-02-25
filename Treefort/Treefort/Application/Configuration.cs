@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Treefort.Commanding;
 using Treefort.Common;
 using Treefort.Domain;
@@ -14,18 +15,18 @@ namespace Treefort.Application
     {
         //TODO fluent config 
 
-        public static IApplicationServer InMemory(IEnumerable<Func<IEventStore, IEventPublisher, IApplicationService>> appServiceFactories, Func<IEnumerable<IProjection>> projections, Func<IEnumerable<IReceptor>> receptors)
+        public static ICommandDispatcher InMemory(IEnumerable<Func<IEventStore, IEventPublisher, IApplicationService>> appServiceFactories, Func<IEnumerable<IProjection>> projections, Func<IEnumerable<IReceptor>> receptors)
         {
             return WithEventStore(() => new InMemoryEventStore(() => new InMemoryEventStream()), appServiceFactories, projections, receptors);
         }
         
-        public static IApplicationServer WithEventStore(Func<IEventStore> eventStoreFactory, IEnumerable<Func<IEventStore, IEventPublisher, IApplicationService>> appServiceFactories, Func<IEnumerable<IProjection>> projections, Func<IEnumerable<IReceptor>> receptors)
+        public static ICommandDispatcher WithEventStore(Func<IEventStore> eventStoreFactory, IEnumerable<Func<IEventStore, IEventPublisher, IApplicationService>> appServiceFactories, Func<IEnumerable<IProjection>> projections, Func<IEnumerable<IReceptor>> receptors)
         {
-            return WithEventStore((logger, services) => new InMemoryCommandRouter(logger).Tap(r => services.ForEach(r.RegisterHandler)),
+            return WithEventStore((logger, services) => new Dispatcher<ICommand, Task>().Tap(d => services.ForEach(s => d.Register(s))), 
                 eventStoreFactory, appServiceFactories, projections, receptors);
         }
 
-        public static IApplicationServer WithEventStore(Func<ILogger, IEnumerable<IApplicationService>, ICommandRouter> routerFactory, Func<IEventStore> eventStoreFactory, IEnumerable<Func<IEventStore, IEventPublisher, IApplicationService>> appServiceFactories, Func<IEnumerable<IProjection>> projections, Func<IEnumerable<IReceptor>> receptors)
+        public static ICommandDispatcher WithEventStore(Func<ILogger, IEnumerable<IApplicationService>, Dispatcher<ICommand,Task>> dispatcherFactory, Func<IEventStore> eventStoreFactory, IEnumerable<Func<IEventStore, IEventPublisher, IApplicationService>> appServiceFactories, Func<IEnumerable<IProjection>> projections, Func<IEnumerable<IReceptor>> receptors)
         {
             var logger = new ConsoleLogger();
             var eventListeners = new List<IEventListener>
@@ -34,8 +35,8 @@ namespace Treefort.Application
             };
             var eventPublisher = new EventPublisher(eventListeners, logger);
             var publishingEventStore = new PublishingEventStore(eventStoreFactory(), eventPublisher);
-            var router = routerFactory(logger, appServiceFactories.Select(fac => fac(publishingEventStore, eventPublisher)));
-            var appServer = new ApplicationServer(router, logger);
+            var router = dispatcherFactory(logger, appServiceFactories.Select(fac => fac(publishingEventStore, eventPublisher)));
+            var appServer = new ApplicationServer(router.Dispatch, logger);
             eventListeners.Add(new ReceptorListener(receptors(), appServer));
             return appServer;
         }

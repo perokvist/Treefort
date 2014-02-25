@@ -38,9 +38,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Application\ApplicationServer.cs" />
+    <Compile Include="Application\Dispatcher.cs" />
     <Compile Include="Application\IApplicationService.cs" />
     <Compile Include="Application\StatefulApplicationService.cs" />
     <Compile Include="Application\StatelessApplicationService.cs" />
+    <Compile Include="Common\DispatcherExtensions.cs" />
     <Compile Include="Events\IEventBus.cs" />
     <Compile Include="Infrastructure\ITextSerializer.cs" />
     <Compile Include="Infrastructure\PublishingEventStore.cs" />
@@ -62,10 +64,8 @@
     <Compile Include="Infrastructure\ConsoleLogger.cs" />
     <Compile Include="Infrastructure\IJsonConverter.cs" />
     <Compile Include="Events\IEventPublisher.cs" />
-    <Compile Include="Application\ICommandRouter.cs" />
     <Compile Include="Infrastructure\ILogger.cs" />
-    <Compile Include="Infrastructure\InMemoryCommandRouter.cs" />
-    <Compile Include="Application\IApplicationServer.cs" />
+    <Compile Include="Commanding\ICommandDispatcher.cs" />
     <Compile Include="Domain\IReceptor.cs" />
     <Compile Include="Common\Extensions.cs" />
     <Compile Include="Infrastructure\InMemoryEventStore.cs" />

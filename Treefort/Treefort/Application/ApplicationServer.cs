@@ -8,16 +8,16 @@ using Treefort.Messaging;
 
 namespace Treefort.Application
 {
-    public class ApplicationServer : IApplicationServer, ICommandBus
+    public class ApplicationServer : ICommandDispatcher, ICommandBus
     {
-        private readonly ICommandRouter _commandRouter;
+        private readonly Func<ICommand, Task> _dispatcher;
         private readonly ILogger _logger;
-
+        
         public ApplicationServer(
-            ICommandRouter commandRouter,
+            Func<ICommand, Task> dispatcher,
             ILogger logger)
         {
-            _commandRouter = commandRouter;
+            _dispatcher = dispatcher;
             _logger = logger;
         }
 
@@ -25,20 +25,18 @@ namespace Treefort.Application
         {
             _logger.Info(string.Format("Server Dispatches command {0} ({1})", command, command.CorrelationId));
             //TODO this need to be awaited to run ?
-            return _commandRouter
-                .GetHandler(command)
-                (command);//Warning concurrency problems ahead
+            return _dispatcher(command);
         }
 
-        public Task SendAsync(Envelope<ICommand> command)
+        Task ICommandBus.SendAsync(Envelope<ICommand> command)
         {
             return DispatchAsync(command.Body);
         }
-
-        public void Send(IEnumerable<Envelope<ICommand>> commands)
+        
+       void ICommandBus.Send(IEnumerable<Envelope<ICommand>> commands)
         {
             commands.ForEach(cmd => DispatchAsync(cmd.Body));
         }
     }
-    
+
 }

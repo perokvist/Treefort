@@ -5,12 +5,12 @@ namespace Treefort.EntityFramework.Eventing
 {
     public class AssemblyQualifiedNameTypeResolver : IEventTypeResolver
     {
-        public System.Type Resolve(string eventType)
+        public Type Resolve(string eventType)
         {
             return Type.GetType(eventType);
         }
 
-        public string AsString(System.Type type)
+        public string AsString(Type type)
         {
             return type.AssemblyQualifiedName;
         }

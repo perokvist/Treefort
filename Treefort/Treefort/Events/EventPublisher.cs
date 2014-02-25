@@ -11,7 +11,6 @@ namespace Treefort.Events
         private readonly IEnumerable<IEventListener> _eventListeners;
         private readonly ILogger _logger;
 
-        //NOTE beware of Autofac IDisposabe With ISubject
         public EventPublisher(IEnumerable<IEventListener> eventListeners, ILogger logger)
         {
             _eventListeners = eventListeners;
