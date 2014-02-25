@@ -25,36 +25,7 @@ namespace Treefort.Application
 
         protected async Task UpdateAsync(ICommand command, Func<TAggregate, IEnumerable<IEvent>> executeCommandUsingThis)
         {
-            await _eventStore
-                        .LoadEventStreamAsync(command.AggregateId)
-                        .ContinueWith(t => UpdateAsync(command, executeCommandUsingThis, t.Result))
-                        .Unwrap()
-                        .ConfigureAwait(false);
-        }
-
-        private async Task<IEvent[]> UpdateAsync(ICommand command,
-            Func<TAggregate, IEnumerable<IEvent>> executeCommandUsingThis,
-            IEventStream eventStream)
-        {
-            //State
-            var state = new TState();
-
-            //Replay events
-            eventStream.ForEach(e => state.When((dynamic)e));
-
-            //Aggregate
-            var aggregate = _aggregateFactory(state);
-            var events = executeCommandUsingThis(aggregate)
-                .ToArray();
-
-            //Correlation
-            events.ForEach(e => e.CorrelationId = command.CorrelationId);
-
-            //Persist
-            await _eventStore
-                .StoreAsync(command.AggregateId, eventStream.Version, events)
-                .ConfigureAwait(false);
-            return events;
+            await ApplicationService.UpdateAsync(_aggregateFactory, _eventStore, command, executeCommandUsingThis);
         }
     }
 }

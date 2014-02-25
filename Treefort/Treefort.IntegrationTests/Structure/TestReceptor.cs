@@ -13,7 +13,7 @@ namespace Treefort.IntegrationTests.Structure
     {
         public bool Touched { get; set; }
 
-        public Task<ICommand> MapAsync(IEvent @event)
+        public Task<ICommand> HandleAsync(IEvent @event)
         {
             Touched = true;
             return Task.FromResult<ICommand>(null);

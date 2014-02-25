@@ -1,4 +1,6 @@
-﻿using NUnit.Framework;
+﻿using System.Linq;
+using System.Threading.Tasks;
+using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using Treefort.Application;
@@ -8,6 +10,7 @@ using Treefort.Events;
 using Treefort.Infrastructure;
 using Treefort.IntegrationTests.Structure;
 using Treefort.Read;
+using TestState = Treefort.IntegrationTests.Structure.TestState;
 
 namespace Treefort.IntegrationTests
 {
@@ -21,7 +24,7 @@ namespace Treefort.IntegrationTests
         [SetUp]
         public void Setup()
         {
-         
+
             _projection = new TestProjection();
             _receptor = new TestReceptor();
             _appServer = Configuration.InMemory(
@@ -29,12 +32,12 @@ namespace Treefort.IntegrationTests
                     {
                         (es, ep) => new TestApplicationService(ep),
                         (es, ep) => new ProcessApplicationService(es)
-                    }, 
-                () => new List<IProjection> { _projection},
+                    },
+                () => new List<IProjection> { _projection },
                 () => new List<IReceptor> { _receptor }
               );
         }
-        
+
         [Test]
         public void ShouldPublishEventToProjection()
         {
@@ -46,9 +49,9 @@ namespace Treefort.IntegrationTests
         public void ShouldPublishEventsToProjection()
         {
             _appServer.DispatchAsync(new TestCommand()).Wait();
-                Assert.AreEqual(2, _projection.EventCount); 
+            Assert.AreEqual(2, _projection.EventCount);
         }
-        
+
 
         [Test]
         public void ShouldPublishEventToReceptor()
@@ -56,6 +59,5 @@ namespace Treefort.IntegrationTests
             _appServer.DispatchAsync(new TestCommand()).Wait();
             Assert.IsTrue(_receptor.Touched);
         }
-        
     }
 }

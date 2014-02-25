@@ -6,6 +6,6 @@ namespace Treefort.Domain
 {
     public interface IReceptor 
     {
-        Task<ICommand> MapAsync(IEvent @event);
+        Task<ICommand> HandleAsync(IEvent @event);
     }
 }
