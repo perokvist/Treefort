@@ -24,7 +24,7 @@ namespace Treefort.Infrastructure
         {
             var receptorTasks = events.SelectMany(evt => _receptors.Select(r => r.HandleAsync(evt)));
             var commands = await Task.WhenAll(receptorTasks);
-            foreach (var command in commands)
+            foreach (var command in commands.Where(c => c !=null))
             {
                 await _commandBus.SendAsync(new Envelope<ICommand>(command));
             }

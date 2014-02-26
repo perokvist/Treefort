@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.20827.3
+VisualStudioVersion = 12.0.21005.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Treefort.EntityFramework", "Treefort.Entity\Treefort.EntityFramework.csproj", "{6CCC8709-88B3-46FA-B1F8-4A9492699D73}"
 EndProject
@@ -29,6 +29,10 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{E7E40ABC-4079-4544-975A-0C96ABEC1CBB}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Treefort.IntegrationTests", "Treefort.IntegrationTests\Treefort.IntegrationTests.csproj", "{7CA81AE5-C337-4A55-BF09-8964CD90D3DC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Treefort.EventStore", "Treefort.EventStore\Treefort.EventStore.csproj", "{B1346D2D-B7A0-4A11-A7F9-D5CC6D4E3C7D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Treefort.Rx", "Treefort.Rx\Treefort.Rx.csproj", "{AFF82521-50E1-4316-806E-55301A37ED91}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -68,6 +72,14 @@ Global
 		{7CA81AE5-C337-4A55-BF09-8964CD90D3DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7CA81AE5-C337-4A55-BF09-8964CD90D3DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7CA81AE5-C337-4A55-BF09-8964CD90D3DC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B1346D2D-B7A0-4A11-A7F9-D5CC6D4E3C7D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B1346D2D-B7A0-4A11-A7F9-D5CC6D4E3C7D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B1346D2D-B7A0-4A11-A7F9-D5CC6D4E3C7D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B1346D2D-B7A0-4A11-A7F9-D5CC6D4E3C7D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AFF82521-50E1-4316-806E-55301A37ED91}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AFF82521-50E1-4316-806E-55301A37ED91}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AFF82521-50E1-4316-806E-55301A37ED91}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AFF82521-50E1-4316-806E-55301A37ED91}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

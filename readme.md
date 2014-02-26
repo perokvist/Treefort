@@ -47,7 +47,7 @@ Creation of a Receptor is simple.
 
 ##Process Managers
 
-It is possible to implement process manager through the IReceptor interface.
+It is possible to implement process manager through the IReceptor interface. Same persistence helpers apply here, then the process manages state is eventsourced as well.
 
 ##Application Services
 
@@ -99,7 +99,11 @@ If you like a class implementation for each application service there are to hel
         }
 	}
 
+###Rx
 
+Instead of using the PublishingEventStore, you could use the ObservableEventStore. This way you could subscribe to events from the eventstore. Another way is to create an eventlistener that publishes events to Subject.
+If you are using EventStore (geteventstore) use their subscriptions model (you could sprikle that with Rx as well).
+You could use the PublishEventStore together with ObservableEventStore, just create ObservableEventStore with PublishEventStore.
 
 #TODO
 
