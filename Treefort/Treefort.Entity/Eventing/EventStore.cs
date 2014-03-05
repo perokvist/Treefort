@@ -25,7 +25,7 @@ namespace Treefort.EntityFramework.Eventing
                 .ContinueWith(s => _adapterFactory(s.Result ?? new EventStream()));
         }
 
-        public async Task StoreAsync(System.Guid entityId, long version, System.Collections.Generic.IEnumerable<IEvent> events)
+        public async Task AppendAsync(System.Guid entityId, long version, System.Collections.Generic.IEnumerable<IEvent> events)
         {
             var stream = await _eventContext.Streams.SingleOrDefaultAsync(s => s.AggregateId == entityId);
             var adapter = _adapterFactory(stream ?? _eventContext.Streams.Add(new EventStream() { AggregateId = entityId }));

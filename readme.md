@@ -105,6 +105,12 @@ Instead of using the PublishingEventStore, you could use the ObservableEventStor
 If you are using EventStore (geteventstore) use their subscriptions model (you could sprikle that with Rx as well).
 You could use the PublishEventStore together with ObservableEventStore, just create ObservableEventStore with PublishEventStore.
 
+###Azure
+
+The Azure project contains processors to aid messaging of commands and events. This trough either Queues or Topics. The bases is same as in the CQRS journey project, updated for the message pump functionallity.
+
+If you are using eventstore, use the subscription model when you can.
+
 #TODO
 
 - Enevelope "builder" cms -> envelope -> Done. BuildMessage

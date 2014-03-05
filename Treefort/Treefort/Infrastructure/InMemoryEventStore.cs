@@ -17,7 +17,7 @@ namespace Treefort.Infrastructure
             _streams = new ConcurrentDictionary<Guid, IEventStream>();
         }
 
-        public async Task StoreAsync(System.Guid entityId, long version, System.Collections.Generic.IEnumerable<IEvent> events)
+        public async Task AppendAsync(System.Guid entityId, long version, System.Collections.Generic.IEnumerable<IEvent> events)
         {
             var eventStream = _streams.ContainsKey(entityId) ? _streams[entityId] : _eventStreamFactory();
             if (version != eventStream.Version)

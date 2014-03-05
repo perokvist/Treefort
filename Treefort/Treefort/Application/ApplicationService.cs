@@ -51,7 +51,7 @@ namespace Treefort.Application
 
             //Persist
             await store
-                .StoreAsync(command.AggregateId, eventStream.Version, events)
+                .AppendAsync(command.AggregateId, eventStream.Version, events)
                 .ConfigureAwait(false);
             return events;
         }

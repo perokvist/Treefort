@@ -38,11 +38,17 @@ namespace Treefort.Azure.Commanding
             var writer = new StreamWriter(stream);
             _serializer.Serialize(writer, command.Body); //TODO check writer type
             stream.Position = 0;
-            return new BrokeredMessage(stream, true)
+            var message = new BrokeredMessage(stream, true)
             {
-                MessageId = command.Body.AggregateId.ToString(),
-                CorrelationId = command.Body.CorrelationId.ToString() //TODO use evn correlation?
+                MessageId = command.MessageId,
+                CorrelationId = command.CorrelationId,
             };
+            
+            command
+                .Body.CastAction<ISessionMessage>(sessionMessage => message.SessionId = sessionMessage.SessionId);
+            
+            return message;
         }
+
     }
 }

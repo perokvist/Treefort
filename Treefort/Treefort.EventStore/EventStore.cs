@@ -19,7 +19,7 @@ namespace Treefort.EventStore
             _jsonConverter = jsonConverter;
         }
 
-        public async Task StoreAsync(Guid entityId, long version, IEnumerable<IEvent> events)
+        public async Task AppendAsync(Guid entityId, long version, IEnumerable<IEvent> events)
         {
             var data = events.Select(e => e.ToEventData());
             await _storeConnection.AppendToStreamAsync(entityId.ToString(), (int)version, data);

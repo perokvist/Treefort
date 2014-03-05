@@ -9,5 +9,13 @@ namespace Treefort.Common
             action(self);
             return self;
         }
+
+        public static void CastAction<T>(this object self, Action<T> action)
+            where T : class
+        {
+            var cast = self as T;
+            if (cast != null)
+                action(cast);
+        }
     }
 }

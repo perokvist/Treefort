@@ -13,10 +13,10 @@ namespace Treefort.Infrastructure
             _eventPublisher = eventPublisher;
         }
 
-        public async System.Threading.Tasks.Task StoreAsync(System.Guid entityId, long version, System.Collections.Generic.IEnumerable<IEvent> events)
+        public async System.Threading.Tasks.Task AppendAsync(System.Guid entityId, long version, System.Collections.Generic.IEnumerable<IEvent> events)
         {
             var enumerable = events as IEvent[] ?? events.ToArray();
-            await _eventStore.StoreAsync(entityId, version, enumerable);
+            await _eventStore.AppendAsync(entityId, version, enumerable);
             //NOTE if the app breaks here = trouble :)
             await _eventPublisher.PublishAsync(enumerable);
         }

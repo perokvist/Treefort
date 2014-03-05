@@ -1,4 +1,6 @@
 using System;
+using Treefort.Commanding;
+using Treefort.Common;
 
 namespace Treefort.Messaging
 {
@@ -12,7 +14,13 @@ namespace Treefort.Messaging
         /// </summary>
         public static Envelope<T> Create<T>(T body)
         {
-            return new Envelope<T>(body);
+            var envelope = new Envelope<T>(body);
+
+            body.CastAction<ICommand>(command => envelope
+                .Tap(x => x.CorrelationId = command.CorrelationId.ToString())
+                .Tap(x => x.MessageId = command.AggregateId.ToString()));
+
+            return envelope;
         }
     }
 

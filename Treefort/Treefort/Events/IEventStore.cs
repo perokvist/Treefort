@@ -6,8 +6,8 @@ namespace Treefort.Events
 {
     public interface IEventStore
     {
-        Task StoreAsync(Guid entityId, long version, IEnumerable<IEvent> events);
+        Task AppendAsync(Guid entityId, long version, IEnumerable<IEvent> events);
 
-        Task<IEventStream> LoadEventStreamAsync(Guid entityId);
+        Task<IEventStream> LoadEventStreamAsync(Guid streamId);
     }
 }

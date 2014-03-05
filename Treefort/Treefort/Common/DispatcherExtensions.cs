@@ -26,10 +26,10 @@ namespace Treefort.Common
 
         public static void Register(Dispatcher<ICommand, Task> dispatcher, Type type, IApplicationService applicationSerivce)
         {
-             typeof(DispatcherExtensions).GetMethod("Register2").MakeGenericMethod(type).Invoke(null, new object[] { dispatcher, applicationSerivce});
+             typeof(DispatcherExtensions).GetMethod("RegisterApplicationService").MakeGenericMethod(type).Invoke(null, new object[] { dispatcher, applicationSerivce});
         }
 
-        public static void Register2<T>(this Dispatcher<ICommand, Task> dispatcher, IApplicationService applicationService)
+        public static void RegisterApplicationService<T>(this Dispatcher<ICommand, Task> dispatcher, IApplicationService applicationService)
             where T :ICommand
         {
             dispatcher.Register<T>(arg => applicationService.HandleAsync(arg));
