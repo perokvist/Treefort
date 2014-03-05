@@ -1,5 +1,7 @@
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using Treefort.Commanding;
 using Treefort.Common;
@@ -12,6 +14,7 @@ namespace Treefort.Application
     {
         private readonly Func<ICommand, Task> _dispatcher;
         private readonly ILogger _logger;
+        private readonly ConcurrentDictionary<Guid, SemaphoreSlim> _aggregateLocks;
         
         public ApplicationServer(
             Func<ICommand, Task> dispatcher,
@@ -19,13 +22,16 @@ namespace Treefort.Application
         {
             _dispatcher = dispatcher;
             _logger = logger;
+            _aggregateLocks = new ConcurrentDictionary<Guid, SemaphoreSlim>();
         }
 
-        public Task DispatchAsync(ICommand command)
+        public async Task DispatchAsync(ICommand command)
         {
+            var @lock = _aggregateLocks.GetOrAdd(command.AggregateId, guid => new SemaphoreSlim(1));
+            await @lock.WaitAsync();
             _logger.Info(string.Format("Server Dispatches command {0} ({1})", command, command.CorrelationId));
-            //TODO this need to be awaited to run ?
-            return _dispatcher(command);
+            await _dispatcher(command);
+            @lock.Release();
         }
 
         Task ICommandBus.SendAsync(Envelope<ICommand> command)
