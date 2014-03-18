@@ -111,6 +111,47 @@ The Azure project contains processors to aid messaging of commands and events. T
 
 If you are using eventstore, use the subscription model when you can.
 
+####Azure Sample Client
+
+ 	class Program
+    {
+        static void Main(string[] args)
+        {
+            Console.WriteLine("Starting...");
+            var connectionString = ConfigurationManager.AppSettings["Microsoft.ServiceBus.ConnectionString"];
+            var manager = NamespaceManager.CreateFromConnectionString(connectionString);
+            const string path = "commands";
+            if(!manager.QueueExists(path))
+                manager.CreateQueue(path);
+            var bus = new CommandBus(new QueueSender(connectionString, path), new JsonTextSerializer());
+            for (var i = 0; i < 3; i++)
+            {
+                Console.WriteLine("Sending command {0}", i + 1);
+                bus.SendAsync(new SampleCommand()).Wait();
+            }
+            Console.ReadLine();
+        }
+    }
+
+
+####Azure Sample Processor
+
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            var connectionString = ConfigurationManager.AppSettings["Microsoft.ServiceBus.ConnectionString"];
+            var dispatcher = new Dispatcher<ICommand, Task>();
+            dispatcher.Register<SampleCommand>(command => Task.Run(() => Console.WriteLine("Received {0}", command.AggregateId)));
+            const string path = "commands";
+
+            var processor = new CommandProcessor(new QueueReceiver(connectionString, path), new CommandDispatcherAction(dispatcher.Dispatch), new JsonTextSerializer());
+            processor.Start();
+            Console.ReadLine();
+            processor.Stop();
+        }
+    }
+
 #TODO
 
 - Enevelope "builder" cms -> envelope -> Done. BuildMessage

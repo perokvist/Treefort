@@ -18,14 +18,18 @@ namespace Treefort.Azure.Messaging
         {
             var options = new OnMessageOptions {MaxConcurrentCalls = 1};
             //_client.RetryPolicy = new RetryExponential();
-            options.ExceptionReceived += (sender, args) => OnException(sender as BrokeredMessage, (dynamic) args.Exception);
+            //http://social.msdn.microsoft.com/Forums/live/en-US/eddc7ba3-935f-4fed-a0fa-b585ea6c5e22/service-bus-message-pump-exceptionreceived-with-null-exception
+            options.ExceptionReceived += (sender, args) =>
+            {
+                if (args.Exception != null)
+                    OnException(sender as BrokeredMessage, (dynamic) args.Exception);
+            };
             _client.OnMessageAsync(messageHandler, options);
         }
 
         private void OnException(BrokeredMessage message, SerializationException exception)
         {
-            throw new NotImplementedException();
-            //message.DeadLetterAsync()
+            message.DeadLetter("Failed to process", exception.Message);
         }
 
 
