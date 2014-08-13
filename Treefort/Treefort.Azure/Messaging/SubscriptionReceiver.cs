@@ -13,9 +13,10 @@ namespace Treefort.Azure.Messaging
             _client = messagingFactory.CreateSubscriptionClient(topic, subscription);
         }
 
-        public void Start(Func<BrokeredMessage, Task> messageHandler)
+        public async void Start(Func<BrokeredMessage, Task> messageHandler)
         {
             var options = new OnMessageOptions {MaxConcurrentCalls = 1};
+            await Task.Factory.StartNew(() => _client.AcceptMessageSession().OnMessageAsync(messageHandler, options));
             _client.OnMessageAsync(messageHandler, options);
         }
 
