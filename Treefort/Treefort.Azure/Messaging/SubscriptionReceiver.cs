@@ -16,7 +16,7 @@ namespace Treefort.Azure.Messaging
         public async void Start(Func<BrokeredMessage, Task> messageHandler)
         {
             var options = new OnMessageOptions {MaxConcurrentCalls = 1};
-            await Task.Factory.StartNew(() => _client.AcceptMessageSession().OnMessageAsync(messageHandler, options));
+            await Task.Factory.StartNew(() => _client.OnMessageAsync(messageHandler, options));
             _client.OnMessageAsync(messageHandler, options);
         }
 

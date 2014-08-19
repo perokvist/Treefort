@@ -72,6 +72,7 @@
     <Compile Include="Common\Extensions.cs" />
     <Compile Include="Infrastructure\InMemoryEventStore.cs" />
     <Compile Include="Infrastructure\InMemoryEventStream.cs" />
+    <Compile Include="Messaging\ISessionMessage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Read\ProjectionEventListener.cs" />
     <Compile Include="Read\IgnoreNonApplicableEvents.cs" />
