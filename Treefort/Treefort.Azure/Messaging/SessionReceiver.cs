@@ -21,6 +21,11 @@ namespace Treefort.Azure.Messaging
                 {
                     logger(string.Format("Session timeout: {0}", ex.Message));
                 }
+                catch(Exception ex)
+                {
+                    logger(string.Format("Session exception: {0}", ex.Message));
+                    throw;
+                }
 
                 await Task.Delay(300, token);
                 await Task.Run(() => StartSessionAsync(clientAccept, messageHandler, logger, options, token), token);

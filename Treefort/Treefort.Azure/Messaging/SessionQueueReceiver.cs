@@ -24,11 +24,11 @@ namespace Treefort.Azure.Messaging
             _client = QueueClient.CreateFromConnectionString(connectionString, path, ReceiveMode.PeekLock);
         }
 
-        public void Start(Func<BrokeredMessage, Task> messageHandler)
+        public async void Start(Func<BrokeredMessage, Task> messageHandler)
         {
             _logger("Process starting...");
             _cancelationTokenSoucre = new CancellationTokenSource();
-            SessionReceiver.StartSessionAsync(() => _client.AcceptMessageSessionAsync(TimeSpan.FromMinutes(1)) ,messageHandler, _logger ,new OnMessageOptions() {MaxConcurrentCalls = 1}, _cancelationTokenSoucre.Token);
+            await SessionReceiver.StartSessionAsync(() => _client.AcceptMessageSessionAsync(TimeSpan.FromMinutes(1)) ,messageHandler, _logger ,new OnMessageOptions() {MaxConcurrentCalls = 1}, _cancelationTokenSoucre.Token);
         }
         
         public Task StopAsync()
