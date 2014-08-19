@@ -152,6 +152,28 @@ If you are using eventstore, use the subscription model when you can.
         }
     }
 
+####Azure Sample Session Processor
+
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            var connectionString = ConfigurationManager.AppSettings["Microsoft.ServiceBus.ConnectionString"];
+            var logger = new ConsoleLogger();
+            var store = new InMemoryEventStore(() => new InMemoryEventStream());
+            var dispatcher = new Dispatcher<ICommand, Task>();
+            dispatcher.Register<SampleSessionCommand>(command => Task.Run(() => Console.WriteLine("Received Session Command {0} Session: {1}", command.AggregateId, command.SessionId)));
+
+            const string path = "commands";
+
+            var processor = new CommandProcessor(new SessionQueueReceiver(connectionString, path, Console.WriteLine), new CommandDispatcherAction(dispatcher.Dispatch), new JsonTextSerializer());
+             
+            processor.Start();
+            Console.ReadLine();
+            processor.Stop();
+        }
+    }
+
 #TODO
 
 - Enevelope "builder" cms -> envelope -> Done. BuildMessage
