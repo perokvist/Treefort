@@ -8,27 +8,35 @@ namespace Treefort.Events
 {
     public class EventPublisher : IEventPublisher
     {
-        private readonly IEnumerable<IEventListener> _eventListeners;
-        private readonly ILogger _logger;
+        private readonly Func<IEnumerable<IEvent>, Task> _eventListerners;
+        private readonly Action<string> _log;
+
+        public EventPublisher(IEnumerable<IEventListener> eventListeners, Action<string> logger)
+            : this(events => Task.WhenAll(eventListeners.Select(x => x.ReceiveAsync(events)).ToList()), logger)
+        {
+        }
 
         public EventPublisher(IEnumerable<IEventListener> eventListeners, ILogger logger)
+            : this(eventListeners, logger.Info)
         {
-            _eventListeners = eventListeners;
-            _logger = logger;
+
         }
         
+        public EventPublisher(Func<IEnumerable<IEvent>, Task> eventListerner, Action<string> logger)
+        {
+            _eventListerners = eventListerner;
+            _log = logger;
+        }
+
         public Task PublishAsync(IEvent @event)
         {
-            _logger.Info(string.Format("Publisher Received {0} ({1})", @event, @event.CorrelationId));
-            return PublishAsync(new[] {@event});
+            _log(string.Format("Publisher Received {0} ({1})", @event, @event.CorrelationId));
+            return PublishAsync(new[] { @event });
         }
 
         public Task PublishAsync(IEnumerable<IEvent> events)
         {
-            var publishTasks = _eventListeners
-                .Select(x => x.ReceiveAsync(events))
-                .ToList();
-            return Task.WhenAll(publishTasks);
+            return _eventListerners(events);
         }
     }
 }
