@@ -1,14 +1,12 @@
 #Treefort
 
-Small infrastructure parts.
+Small infrastructure parts, for DDD/CQRS/Event sourcing.
 
 ## ApplicationServer
 
 When using Treefort in a non distributed scenario, like in app, the ApplicationServer is your starting point.
 An ApplicationServer is an InMemoryCommandBus and CommandDispatcher (implements ICommandBus and ICommandDispatcher).
 To create an ApplicationServer you need a dispatcher and a logger. The following code shows a simple InMemory scenario.
-
-
 
         var logger = new ConsoleLogger();
         var store = new InMemoryEventStore(() => new InMemoryEventStream());
@@ -174,15 +172,6 @@ If you are using eventstore, use the subscription model when you can.
         }
     }
 
-#TODO
-
-- Enevelope "builder" cms -> envelope -> Done. BuildMessage
-- OnMessage should guarantee events persisted - Both guaranteed in same Task, not optional but ok, 1st itr.
-- OnMessage should guarantee events "handeled" - Both EventListener and Receptors Async, so OnMessage Wais for task to complete.
-- Command Retry
-- Integration test for Azure
-- MetaDataProvider
-- JsonConverter -> TextSerializer
 
 
 

@@ -12,8 +12,8 @@
     <description>$description$</description>
     <releaseNotes>New routing and dispatching</releaseNotes>
     <copyright>Copyright 2014</copyright>
-    <tags>Infrastructure</tags>
-    <iconUrl>https://raw.githubusercontent.com/perokvist/Treefort/dev/32x32-treefort_blue.png</iconUrl>
+    <tags>Infrastructure, CQRS, DDD, Event sourcing</tags>
+    <iconUrl>https://raw.githubusercontent.com/perokvist/Treefort/dev/treefort.png</iconUrl>
   </metadata>
 </package>
 
