@@ -11,6 +11,7 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>$description$</description>
     <copyright>Copyright 2014</copyright>
-    <tags>infrastructure, Azure</tags>
+    <tags>Azure, Infrastructure, CQRS, DDD, Event sourcing</tags>
+    <iconUrl>https://raw.githubusercontent.com/perokvist/Treefort/dev/treefort.png</iconUrl>
   </metadata>
 </package>
