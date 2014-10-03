@@ -9,6 +9,11 @@ namespace Treefort.Read
     {
         private readonly IEnumerable<IProjection> _listerners;
 
+        public ProjectionEventListener(IEnumerable<IProjection> listerners)
+        {
+            _listerners = listerners;
+        }
+        
         public ProjectionEventListener(params IProjection[] listerners)
         {
             _listerners = listerners;
