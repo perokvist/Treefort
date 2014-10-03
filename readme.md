@@ -1,6 +1,8 @@
 #Treefort
 
-Small infrastructure parts, for DDD/CQRS/Event sourcing.
+Small infrastructure parts, for DDD/CQRS/Event sourcing. To explore and create labs.
+
+[MyGet Feed](https://www.myget.org/F/treefort/ "MyGet feed") for beta builds.
 
 ## ApplicationServer
 
@@ -18,6 +20,22 @@ To create an ApplicationServer you need a dispatcher and a logger. The following
 			(state => new CarAggregate(state), store, command, aggregate => aggregate.ChangeName(command.NewName)));
 
         var server = new ApplicationServer(dispatcher.Dispatch, logger);
+
+#### Another sample
+
+       var commandDispatcher = new Dispatcher<ICommand, Task>();
+
+            var awailableGames = new AwailableGames();
+            var endedGames = new EndendGames();
+
+            var eventPublisher = new EventPublisher(Console.WriteLine, new ProjectionEventListener(awailableGames, endedGames));
+            var eventStore = new PublishingEventStore(new InMemoryEventStore(() => new InMemoryEventStream()), eventPublisher);
+
+            commandDispatcher.Register<IGameCommand>(
+                command => ApplicationService.UpdateAsync<RPS.Game.Domain.Game, GameState>(
+                    state => new RPS.Game.Domain.Game(state), eventStore, command, game => game.Handle(command)));
+
+            var bus = new ApplicationServer(commandDispatcher.Dispatch, new ConsoleLogger());
 
 
 ##Receptors
