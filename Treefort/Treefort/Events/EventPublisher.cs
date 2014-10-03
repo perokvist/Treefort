@@ -19,9 +19,11 @@ namespace Treefort.Events
         public EventPublisher(IEnumerable<IEventListener> eventListeners, ILogger logger)
             : this(eventListeners, logger.Info)
         {
-
         }
-        
+
+        public EventPublisher(Action<string> logger, params IEventListener[] eventListeners) : this(eventListeners.ToArray(), logger)
+        {}
+
         public EventPublisher(Func<IEnumerable<IEvent>, Task> eventListerner, Action<string> logger)
         {
             _eventListerners = eventListerner;
@@ -36,7 +38,9 @@ namespace Treefort.Events
 
         public Task PublishAsync(IEnumerable<IEvent> events)
         {
-            return _eventListerners(events);
+            var enumerable = events as IEvent[] ?? events.ToArray();
+            _log(string.Format("Publisher Received {0} events ({1})", enumerable.Count(), enumerable.First().CorrelationId));
+            return _eventListerners(enumerable);
         }
     }
 }

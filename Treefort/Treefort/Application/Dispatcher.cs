@@ -1,13 +1,14 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using Treefort.Commanding;
+using Treefort.Common;
 
 namespace Treefort.Application
 {
     public class Dispatcher<TMessage, TResult>
     {
         private readonly Dictionary<Type, Func<TMessage, TResult>> _dictionary = new Dictionary<Type, Func<TMessage, TResult>>();
-
-
 
         public void Register<T>(Func<T, TResult> func) where T : TMessage
         {
@@ -17,11 +18,21 @@ namespace Treefort.Application
         public TResult Dispatch(TMessage m)
         {
             Func<TMessage, TResult> handler;
-            if (!_dictionary.TryGetValue(m.GetType(), out handler))
+           
+            if (_dictionary.TryGetValue(m.GetType(), out handler))
             {
-                throw new Exception("cannot dispatch " + m.GetType());
+                return handler(m);
             }
-            return handler(m);
+
+            var aggregateMakers = m.GetType().GetInterfaces()
+               .Where(x => !(x == typeof(ICommand)));
+
+            if (aggregateMakers.Any(aggregateMaker => _dictionary.TryGetValue(aggregateMaker, out handler)))
+            {
+                return handler(m);
+            }
+
+            throw new Exception("cannot dispatch " + m.GetType());
         }
     }
 }

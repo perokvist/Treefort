@@ -1,10 +1,8 @@
 using System;
 using System.Collections.Generic;
-using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using EventStore.ClientAPI;
-using EventStore.ClientAPI.Common.Utils;
 using Treefort.Events;
 using Treefort.Infrastructure;
 
@@ -21,6 +19,7 @@ namespace Treefort.EventStore
                 ClrType = type.FullName,
                 CreatedAt = DateTime.UtcNow
             };
+            
             return new EventData(Guid.NewGuid(), type.Name, true, @event.ToJsonBytes(), md.ToJsonBytes());
         }
 

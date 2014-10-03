@@ -5,13 +5,6 @@ VisualStudioVersion = 12.0.30723.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Treefort.EntityFramework", "Treefort.Entity\Treefort.EntityFramework.csproj", "{6CCC8709-88B3-46FA-B1F8-4A9492699D73}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{61690859-182E-43B5-B562-6FD6EDBBFCCB}"
-	ProjectSection(SolutionItems) = preProject
-		.nuget\NuGet.Config = .nuget\NuGet.Config
-		.nuget\NuGet.exe = .nuget\NuGet.exe
-		.nuget\NuGet.targets = .nuget\NuGet.targets
-	EndProjectSection
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Treefort", "Treefort\Treefort.csproj", "{E67ACAFE-2F8F-49CE-8036-3DA59C69CB79}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Treefort.Azure", "Treefort.Azure\Treefort.Azure.csproj", "{A99EAADC-88F2-4305-BA4C-C538B9050DB9}"
