@@ -5,9 +5,9 @@ namespace Treefort.Read
 {
     public class IgnoreNonApplicableEventsAsync
     {
-        public async Task HandleAsync(IEvent @event)
+        public Task HandleAsync(IEvent @event)
         {
-
+            return Task.FromResult(0);
         } 
     }
 }
