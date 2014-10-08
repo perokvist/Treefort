@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
 using Treefort.Commanding;
@@ -27,11 +28,28 @@ namespace Treefort.Application
 
         public async Task DispatchAsync(ICommand command)
         {
-            var @lock = _aggregateLocks.GetOrAdd(command.AggregateId, guid => new SemaphoreSlim(1));
+            var @lock = _aggregateLocks.GetOrAdd(command.AggregateId, guid =>
+            {
+                _logger.Info(string.Format("Creating lock for {0}", guid));
+                return new SemaphoreSlim(1);
+            });
+            
             await @lock.WaitAsync();
-            _logger.Info(string.Format("Server Dispatches command {0} ({1})", command, command.CorrelationId));
-            await _dispatcher(command);
-            @lock.Release();
+            try
+            {
+                _logger.Info(string.Format("Server Dispatches command {0} ({1})", command, command.CorrelationId));
+                await _dispatcher(command);
+            }
+            catch(Exception ex)
+            {
+                _logger.Info(string.Format("Dispatch fail for {0} ({1})", command, command.CorrelationId));
+                throw;
+            }
+            finally
+            {
+                _logger.Info(string.Format("Releasing lock for {0}", command.AggregateId));
+                @lock.Release();
+            }
         }
 
         Task ICommandBus.SendAsync(Envelope<ICommand> command)
