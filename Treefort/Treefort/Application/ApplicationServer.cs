@@ -37,17 +37,17 @@ namespace Treefort.Application
             await @lock.WaitAsync();
             try
             {
-                _logger.Info(string.Format("Server Dispatches command {0} ({1})", command, command.CorrelationId));
+                _logger.Info(String.Format("Server Dispatches command {0} ({1})", command, command.CorrelationId));
                 await _dispatcher(command);
             }
-            catch(Exception ex)
+            catch(Exception)
             {
-                _logger.Info(string.Format("Dispatch fail for {0} ({1})", command, command.CorrelationId));
+                _logger.Error(String.Format("Dispatch fail for {0} ({1})", command, command.CorrelationId));
                 throw;
             }
             finally
             {
-                _logger.Info(string.Format("Releasing lock for {0}", command.AggregateId));
+                _logger.Info(String.Format("Releasing lock for {0}", command.AggregateId));
                 @lock.Release();
             }
         }
