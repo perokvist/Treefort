@@ -16,7 +16,7 @@ namespace Treefort.EventStore
             var type = @event.GetType();
             var md = new MetaData
             {
-                ClrType = type.FullName,
+                ClrType = type.AssemblyQualifiedName,
                 CreatedAt = DateTime.UtcNow
             };
             
@@ -24,18 +24,31 @@ namespace Treefort.EventStore
         }
 
         public static async Task<List<ResolvedEvent>> ReadAllEventsFromStream(this IEventStoreConnection connection,
-            string streamName)
+            string streamName, int version = int.MaxValue)
         {
             var result = new List<ResolvedEvent>();
             StreamEventsSlice currentSlice;
-            var nextSliceStart = StreamPosition.Start;
+            var sliceStart = StreamPosition.Start;
+            const int size = 500;
             do
             {
-                currentSlice = await connection.ReadStreamEventsForwardAsync(streamName, nextSliceStart, 100, false);
-                nextSliceStart = currentSlice.NextEventNumber;
+                var sliceCount = sliceStart + size <= version
+                    ? size
+                    : version - sliceStart + 1;
+
+                currentSlice = await connection.ReadStreamEventsForwardAsync(streamName, sliceStart, sliceCount, false);
+
+                if (currentSlice.Status == SliceReadStatus.StreamNotFound)
+                    throw new Exception("");
+
+                if (currentSlice.Status == SliceReadStatus.StreamDeleted)
+                    throw new Exception("");
+
+                sliceStart = currentSlice.NextEventNumber;
+
                 result.AddRange(currentSlice.Events);
 
-            } while (!currentSlice.IsEndOfStream);
+            } while (version >= currentSlice.NextEventNumber && !currentSlice.IsEndOfStream);
 
             return result;
 

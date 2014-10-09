@@ -12,23 +12,44 @@ namespace Treefort.EventStore
     {
         private readonly IEventStoreConnection _storeConnection;
         private readonly IJsonConverter _jsonConverter;
+        private readonly Func<IEvent, EventData> _eventDataProvider;
+        private readonly Func<ResolvedEvent, IJsonConverter, IEvent> _eventConverter;
 
-        public EventStore(IEventStoreConnection storeConnection, IJsonConverter jsonConverter)
+        public EventStore(IEventStoreConnection storeConnection, IJsonConverter jsonConverter) 
+            :this(storeConnection, jsonConverter, @event => @event.ToEventData(),(data, converter) => data.ToEvent(converter))
+        {
+            
+        }
+
+        public EventStore(IEventStoreConnection storeConnection, IJsonConverter jsonConverter, 
+            Func<IEvent, EventData> eventDataProvider, Func<ResolvedEvent,IJsonConverter,IEvent> eventConverter)
         {
             _storeConnection = storeConnection;
             _jsonConverter = jsonConverter;
+            _eventDataProvider = eventDataProvider;
+            _eventConverter = eventConverter;
         }
 
-        public async Task AppendAsync(Guid entityId, long version, IEnumerable<IEvent> events)
+        public Task AppendAsync(Guid entityId, long version, IEnumerable<IEvent> events)
         {
-            var data = events.Select(e => e.ToEventData());
-            await _storeConnection.AppendToStreamAsync(entityId.ToString(), (int)version, data);
+            return AppendAsync(entityId.ToString(), (int) version, events);
         }
 
-        public async Task<IEventStream> LoadEventStreamAsync(Guid entityId)
+        public async Task AppendAsync(string streamName, int version, IEnumerable<IEvent> events)
         {
-            var events = await _storeConnection.ReadAllEventsFromStream(entityId.ToString());
-            return new EventStream(events.Select(e => e.ToEvent(_jsonConverter)), events.Any() ? events.Last().OriginalEventNumber : -1);
+            var data = events.Select(e => _eventDataProvider(e));
+            await _storeConnection.AppendToStreamAsync(streamName, version, data);
+        }
+
+        public Task<IEventStream> LoadEventStreamAsync(Guid entityId)
+        {
+            return LoadEventStreamAsync(entityId.ToString());
+        }
+
+        public async Task<IEventStream> LoadEventStreamAsync(string streamName)
+        {
+            var events = await _storeConnection.ReadAllEventsFromStream(streamName);
+            return new EventStream(events.Select(e => _eventConverter(e, _jsonConverter)), events.Any() ? events.Last().OriginalEventNumber : -1);
         }
     }
 }
