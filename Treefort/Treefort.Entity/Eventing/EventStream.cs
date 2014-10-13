@@ -6,8 +6,8 @@ namespace Treefort.EntityFramework.Eventing
 {
     public class EventStream
     {
-        public long Version { get; set; }
-        public Guid AggregateId { get; set; }
+        public int Version { get; set; }
+        public string StreamName { get; set; }
 
         private ICollection<Event> _events;
         public virtual ICollection<Event> Events

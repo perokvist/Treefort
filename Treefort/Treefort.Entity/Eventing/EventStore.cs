@@ -20,16 +20,16 @@ namespace Treefort.EntityFramework.Eventing
             _adapterFactory = adapterFactory;
         }
 
-        public Task<IEventStream> LoadEventStreamAsync(System.Guid entityId)
+        public Task<IEventStream> LoadEventStreamAsync(string streamName)
         {
-            return _eventContext.Streams.SingleOrDefaultAsync(e => e.AggregateId == entityId)
+            return _eventContext.Streams.SingleOrDefaultAsync(e => e.StreamName == streamName)
                 .ContinueWith(s => _adapterFactory(s.Result ?? new EventStream()));
         }
 
-        public async Task AppendAsync(System.Guid entityId, long version, System.Collections.Generic.IEnumerable<IEvent> events)
+        public async Task AppendAsync(string streamName , int version, System.Collections.Generic.IEnumerable<IEvent> events)
         {
-            var stream = await _eventContext.Streams.SingleOrDefaultAsync(s => s.AggregateId == entityId);
-            var adapter = _adapterFactory(stream ?? _eventContext.Streams.Add(new EventStream() { AggregateId = entityId }));
+            var stream = await _eventContext.Streams.SingleOrDefaultAsync(s => s.StreamName == streamName);
+            var adapter = _adapterFactory(stream ?? _eventContext.Streams.Add(new EventStream() { StreamName = streamName}));
 
             if (version != adapter.Version)
                 throw new OptimisticConcurrencyException("Trying to update an old eventstream");

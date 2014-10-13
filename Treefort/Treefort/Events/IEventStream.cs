@@ -4,8 +4,8 @@ namespace Treefort.Events
 {
     public interface IEventStream : ICollection<IEvent>
     {
-        long Version { get; set; }
-        long EventCount { get; }
+        int Version { get; set; }
+        int EventCount { get; }
         void AddRange(IEnumerable<IEvent> collection);
 
     }

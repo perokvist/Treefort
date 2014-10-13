@@ -8,7 +8,7 @@ namespace Treefort.EntityFramework.Eventing
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<EventStream>()
-             .HasKey(es => es.AggregateId);
+             .HasKey(es => es.StreamName);
             modelBuilder.Entity<Event>()
                 .HasKey(e => e.Id).Property(p => p.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
         }

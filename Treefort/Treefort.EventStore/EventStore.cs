@@ -30,20 +30,10 @@ namespace Treefort.EventStore
             _eventConverter = eventConverter;
         }
 
-        public Task AppendAsync(Guid entityId, long version, IEnumerable<IEvent> events)
-        {
-            return AppendAsync(entityId.ToString(), (int) version, events);
-        }
-
         public async Task AppendAsync(string streamName, int version, IEnumerable<IEvent> events)
         {
             var data = events.Select(e => _eventDataProvider(e));
             await _storeConnection.AppendToStreamAsync(streamName, version, data);
-        }
-
-        public Task<IEventStream> LoadEventStreamAsync(Guid entityId)
-        {
-            return LoadEventStreamAsync(entityId.ToString());
         }
 
         public async Task<IEventStream> LoadEventStreamAsync(string streamName)

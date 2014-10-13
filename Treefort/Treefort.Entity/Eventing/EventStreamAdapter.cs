@@ -54,12 +54,12 @@ namespace Treefort.EntityFramework.Eventing
             _eventStream.Events.Remove(e);
         }
 
-        public long EventCount
+        public int EventCount
         {
             get { return Count; }
         }
 
-        public long Version
+        public int Version
         {
             get { return _eventStream.Version; }
             set { _eventStream.Version = value; }

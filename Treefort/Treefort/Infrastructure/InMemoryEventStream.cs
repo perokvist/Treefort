@@ -5,8 +5,8 @@ namespace Treefort.Infrastructure
 {
     public class InMemoryEventStream : List<IEvent>, IEventStream
     {
-        public long Version { get; set; }
-        public long EventCount
+        public int Version { get; set; }
+        public int EventCount
         {
             get { return base.Count; }
         }

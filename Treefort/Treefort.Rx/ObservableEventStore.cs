@@ -19,16 +19,16 @@ namespace Treefort.Rx
             _subject = new Subject<IEvent>();
         }
 
-        public async Task AppendAsync(Guid entityId, long version, IEnumerable<IEvent> events)
+        public async Task AppendAsync(string streamName, int version, IEnumerable<IEvent> events)
         {
             var enumerableEvents = events as IEvent[] ?? events.ToArray();
-            await _eventStore.AppendAsync(entityId, version, enumerableEvents);
+            await _eventStore.AppendAsync(streamName, version, enumerableEvents);
             enumerableEvents.ForEach(x => _subject.OnNext(x));
         }
 
-        public Task<IEventStream> LoadEventStreamAsync(Guid entityId)
+        public Task<IEventStream> LoadEventStreamAsync(string streamName)
         {
-            return _eventStore.LoadEventStreamAsync(entityId);
+            return _eventStore.LoadEventStreamAsync(streamName);
         }
 
         public IDisposable Subscribe(IObserver<IEvent> observer)

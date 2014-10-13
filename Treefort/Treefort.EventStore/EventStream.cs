@@ -5,15 +5,15 @@ namespace Treefort.EventStore
 {
     public class EventStream : List<IEvent>, IEventStream
     {
-        public EventStream(IEnumerable<IEvent> events, long version)
+        public EventStream(IEnumerable<IEvent> events, int version)
             : base(events)
         {
             Version = version;
         }
 
-        public long Version { get; set; }
+        public int Version { get; set; }
 
-        public long EventCount
+        public int EventCount
         {
             get { return Count; }
         }

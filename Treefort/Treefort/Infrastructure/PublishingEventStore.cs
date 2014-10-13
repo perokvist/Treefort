@@ -13,17 +13,18 @@ namespace Treefort.Infrastructure
             _eventPublisher = eventPublisher;
         }
 
-        public async System.Threading.Tasks.Task AppendAsync(System.Guid entityId, long version, System.Collections.Generic.IEnumerable<IEvent> events)
+        public System.Threading.Tasks.Task<IEventStream> LoadEventStreamAsync(string streamName)
         {
-            var enumerable = events as IEvent[] ?? events.ToArray();
-            await _eventStore.AppendAsync(entityId, version, enumerable);
-            //NOTE if the app breaks here = trouble :)
-            await _eventPublisher.PublishAsync(enumerable);
+            return _eventStore.LoadEventStreamAsync(streamName);
+
         }
 
-        public System.Threading.Tasks.Task<IEventStream> LoadEventStreamAsync(System.Guid entityId)
+        public async System.Threading.Tasks.Task AppendAsync(string streamName, int version, System.Collections.Generic.IEnumerable<IEvent> events)
         {
-            return _eventStore.LoadEventStreamAsync(entityId);
+            var enumerable = events as IEvent[] ?? events.ToArray();
+            await _eventStore.AppendAsync(streamName, version, enumerable);
+            //NOTE if the app breaks here = trouble :)
+            await _eventPublisher.PublishAsync(enumerable);
         }
     }
 }

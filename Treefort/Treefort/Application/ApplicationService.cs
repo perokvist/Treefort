@@ -12,28 +12,44 @@ namespace Treefort.Application
     public static class ApplicationService
     {
         public static async Task UpdateAsync<TAggregate, TState>
-            (Func<TState, TAggregate> aggregateFactory, 
-            IEventStore store, 
-            ICommand command, 
+            (Func<TState, TAggregate> aggregateFactory,
+            IEventStore store,
+            ICommand command,
             Func<TAggregate, IEnumerable<IEvent>> executeCommandUsingThis)
-                where TAggregate : class
-                where TState : class, IState, new()
+            where TAggregate : class
+            where TState : class, IState, new()
+        {
+            
+            Func<Type, Guid, string> streamNameFactory = (t, g) => string.Format("{0}-{1}", char.ToLower(t.Name[0]) + t.Name.Substring(1), g.ToString("N"));
+
+            await UpdateAsync(aggregateFactory, store, streamNameFactory, command, executeCommandUsingThis);
+        }
+
+        public static async Task UpdateAsync<TAggregate, TState>
+           (Func<TState, TAggregate> aggregateFactory,
+            IEventStore store,
+            Func<Type, Guid, string> streamNameFactory,
+            ICommand command,
+            Func<TAggregate, IEnumerable<IEvent>> executeCommandUsingThis)
+            where TAggregate : class
+            where TState : class, IState, new()
         {
             await store
-                        .LoadEventStreamAsync(command.AggregateId)
-                        .ContinueWith(t => UpdateAsync(aggregateFactory,store, command, executeCommandUsingThis, t.Result))
+                        .LoadEventStreamAsync(command.AggregateId.ToString())
+                        .ContinueWith(t => UpdateAsync(aggregateFactory, store, command, executeCommandUsingThis, t.Result, streamNameFactory))
                         .Unwrap()
                         .ConfigureAwait(false);
-
         }
+
         public static async Task<IEvent[]> UpdateAsync<TAggregate, TState>(
             Func<TState, TAggregate> aggregateFactory,
-                    IEventStore store, 
+                    IEventStore store,
                     ICommand command,
                     Func<TAggregate, IEnumerable<IEvent>> executeCommandUsingThis,
-                    IEventStream eventStream)
-                    where TAggregate : class
-                    where TState : class, IState, new()
+                    IEventStream eventStream,
+                    Func<Type, Guid, string> streamNameFactory)
+            where TAggregate : class
+            where TState : class, IState, new()
         {
             //State
             var state = new TState();
@@ -51,7 +67,7 @@ namespace Treefort.Application
 
             //Persist
             await store
-                .AppendAsync(command.AggregateId, eventStream.Version, events)
+                .AppendAsync(streamNameFactory(typeof(TAggregate), command.AggregateId), eventStream.Version, events)
                 .ConfigureAwait(false);
             return events;
         }
