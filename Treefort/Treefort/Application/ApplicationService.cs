@@ -35,7 +35,7 @@ namespace Treefort.Application
             where TState : class, IState, new()
         {
             await store
-                        .LoadEventStreamAsync(command.AggregateId.ToString())
+                        .LoadEventStreamAsync(streamNameFactory(typeof(TAggregate), command.AggregateId))
                         .ContinueWith(t => UpdateAsync(aggregateFactory, store, command, executeCommandUsingThis, t.Result, streamNameFactory))
                         .Unwrap()
                         .ConfigureAwait(false);
