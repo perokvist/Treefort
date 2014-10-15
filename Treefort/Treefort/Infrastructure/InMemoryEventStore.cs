@@ -27,7 +27,7 @@ namespace Treefort.Infrastructure
             return LoadEventStreamAsync(entityId.ToString());
         }
 
-        public async Task<IEventStream> LoadEventStreamAsync(string streamName)
+        public async Task<IEventStream> LoadEventStreamAsync(string streamName, int version = int.MaxValue)
         {
             return _streams.ContainsKey(streamName) ? _streams[streamName] : _eventStreamFactory();
         }

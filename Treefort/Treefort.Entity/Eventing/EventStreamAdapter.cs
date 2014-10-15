@@ -16,12 +16,12 @@ namespace Treefort.EntityFramework.Eventing
         private readonly IEventTypeResolver _eventTypeResolver;
         private readonly bool _initialized;
 
-        public EventStreamAdapter(EventStream eventStream, IJsonConverter jsonConverter, IEventTypeResolver eventTypeResolver)
+        public EventStreamAdapter(EventStream eventStream, IJsonConverter jsonConverter, IEventTypeResolver eventTypeResolver, int version)
         {
             _eventStream = eventStream;
             _jsonConverter = jsonConverter;
             _eventTypeResolver = eventTypeResolver;
-            this.AddRange(_eventStream.Events.OrderBy(e => e.Created)
+            this.AddRange(_eventStream.Events.Where(e => e.OriginalVersion <= version).OrderBy(e => e.Created)
                 .Select(e => _jsonConverter.DeserializeObject(e.Json, _eventTypeResolver.Resolve(e.Type)))
                 .Cast<IEvent>()
                 .ToList());
@@ -73,7 +73,7 @@ namespace Treefort.EntityFramework.Eventing
         private void AddEvent(IEvent item)
         {
             if (_initialized)
-                _eventStream.Events.Add(new Event(_jsonConverter.SerializeObject(item), _eventTypeResolver.AsString(item.GetType()), item.CorrelationId)); 
+                _eventStream.Events.Add(new Event(_jsonConverter.SerializeObject(item), _eventTypeResolver.AsString(item.GetType()), item.CorrelationId, Version)); 
         }
     }
 }

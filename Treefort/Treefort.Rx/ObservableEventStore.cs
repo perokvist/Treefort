@@ -26,7 +26,7 @@ namespace Treefort.Rx
             enumerableEvents.ForEach(x => _subject.OnNext(x));
         }
 
-        public Task<IEventStream> LoadEventStreamAsync(string streamName)
+        public Task<IEventStream> LoadEventStreamAsync(string streamName, int version = int.MaxValue)
         {
             return _eventStore.LoadEventStreamAsync(streamName);
         }

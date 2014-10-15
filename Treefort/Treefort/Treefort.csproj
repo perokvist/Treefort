@@ -44,6 +44,7 @@
     <Compile Include="Application\StatefulApplicationService.cs" />
     <Compile Include="Application\StatelessApplicationService.cs" />
     <Compile Include="Commanding\CommandDispatcherAction.cs" />
+    <Compile Include="Commanding\IBasedOnVersion.cs" />
     <Compile Include="Common\DispatcherExtensions.cs" />
     <Compile Include="Events\IEventBus.cs" />
     <Compile Include="Infrastructure\ITextSerializer.cs" />

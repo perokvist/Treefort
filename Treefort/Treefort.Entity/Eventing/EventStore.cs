@@ -20,7 +20,7 @@ namespace Treefort.EntityFramework.Eventing
             _adapterFactory = adapterFactory;
         }
 
-        public Task<IEventStream> LoadEventStreamAsync(string streamName)
+        public Task<IEventStream> LoadEventStreamAsync(string streamName, int version = int.MaxValue)
         {
             return _eventContext.Streams.SingleOrDefaultAsync(e => e.StreamName == streamName)
                 .ContinueWith(s => _adapterFactory(s.Result ?? new EventStream()));

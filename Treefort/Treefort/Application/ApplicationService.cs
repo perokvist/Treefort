@@ -19,7 +19,7 @@ namespace Treefort.Application
             where TAggregate : class
             where TState : class, IState, new()
         {
-            
+
             Func<Type, Guid, string> streamNameFactory = (t, g) => string.Format("{0}-{1}", char.ToLower(t.Name[0]) + t.Name.Substring(1), g.ToString("N"));
 
             await UpdateAsync(aggregateFactory, store, streamNameFactory, command, executeCommandUsingThis);
@@ -65,9 +65,12 @@ namespace Treefort.Application
             //Correlation
             events.ForEach(e => e.CorrelationId = command.CorrelationId);
 
+            //Version
+            var expectedVersion = command is IBasedOnVersion ? ((IBasedOnVersion) command).OriginalVersion : eventStream.Version;
+
             //Persist
             await store
-                .AppendAsync(streamNameFactory(typeof(TAggregate), command.AggregateId), eventStream.Version, events)
+                .AppendAsync(streamNameFactory(typeof(TAggregate), command.AggregateId), expectedVersion, events)
                 .ConfigureAwait(false);
             return events;
         }

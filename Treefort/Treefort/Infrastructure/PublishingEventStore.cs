@@ -13,7 +13,7 @@ namespace Treefort.Infrastructure
             _eventPublisher = eventPublisher;
         }
 
-        public System.Threading.Tasks.Task<IEventStream> LoadEventStreamAsync(string streamName)
+        public System.Threading.Tasks.Task<IEventStream> LoadEventStreamAsync(string streamName, int version = int.MaxValue)
         {
             return _eventStore.LoadEventStreamAsync(streamName);
 
