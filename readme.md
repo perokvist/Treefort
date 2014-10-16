@@ -1,9 +1,5 @@
 #Treefort
 
-<<<<<<< HEAD
-Small infrastructure parts.
-Ick! , yes infrastructure libraries. 
-=======
 Small infrastructure parts, for DDD/CQRS/Event sourcing. To explore and create labs.
 
 **Current release 0.3.0-beta** on dev branch.
@@ -196,7 +192,3 @@ If you are using eventstore, use the subscription model when you can.
         }
     }
 
-
-
-
->>>>>>> 2beb7eb... updated readme
