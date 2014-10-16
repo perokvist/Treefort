@@ -2,6 +2,8 @@
 
 Small infrastructure parts, for DDD/CQRS/Event sourcing. To explore and create labs.
 
+**Current release 0.3.0-beta** on dev branch.
+
 [MyGet Feed](https://www.myget.org/F/treefort/ "MyGet feed") for beta builds.
 
 ## ApplicationServer
