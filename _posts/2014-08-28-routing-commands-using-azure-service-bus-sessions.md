@@ -1,4 +1,4 @@
-﻿---
+---
 layout: default
 title: Routing Commands using Azure Service Bus Sessions
 ---
