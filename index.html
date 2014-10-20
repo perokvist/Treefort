@@ -6,19 +6,29 @@ title: Treefort
 <div>
     <p>Small infrastructure parts, for DDD/CQRS/Event sourcing. To explore and create labs.</p>
 </div>
+<div class="packages">
+    <h3>NuGet</h3>
 
+    <h3>MyGet</h3>
+    <ul>
+        <li><a href="https://www.myget.org/feed/treefort/package/Treefort">Treefort</a></li>
+        <li><a href="https://www.myget.org/feed/treefort/package/Treefort.Azure">Treefort.Azure</a></li>
+        <li><a href="https://www.myget.org/feed/treefort/package/Treefort.EventStore">Treefort.EventStore</a></li>
+    </ul>
+
+</div>
 <div class="posts">
     <h3>Blog posts related to Treefort</h3>
 
     {% for post in site.posts %}
-    <article class="post">    
-      
+    <article class="post">
+
         <h1><a href="{{ site.baseurl }}{{ post.url }}">{{ post.date | date: "%a, %d %b %Y" }} - {{ post.title }}</a></h1>
 
         <div class="entry">
             {{ post.content | truncatewords:40}}
         </div>
-      
+
         <a href="{{ site.baseurl }}{{ post.url }}" class="read-more">Read More</a>
     </article>
     {% endfor %}
