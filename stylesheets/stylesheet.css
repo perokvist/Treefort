@@ -303,15 +303,7 @@ Full-Width Styles
   font-size: 42px;
   font-weight: 700;
   text-shadow: #111 0px 0px 10px;
-}
-
-#project_title h1 a:before{
-    content: "";
-    display: inline-block;
-    background: url("https://github.com/perokvist/Treefort/blob/dev/treefort.png") no-repeat top right;
-    width: 20px;
-    height: 20px;
-
+  background: url("https://github.com/perokvist/Treefort/blob/dev/treefort.png") no-repeat top right;
 }
 
 #project_tagline {
