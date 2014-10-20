@@ -291,7 +291,6 @@ Full-Width Styles
   background: -ms-linear-gradient(top, #373737, #212121);
   background: -o-linear-gradient(top, #373737, #212121);
   background: linear-gradient(top, #373737, #212121);
-  background: url("https://raw.githubusercontent.com/perokvist/Treefort/dev/treefort.png") no-repeat top right;
 }
 
 #header_wrap .inner {
@@ -304,6 +303,7 @@ Full-Width Styles
   font-size: 42px;
   font-weight: 700;
   text-shadow: #111 0px 0px 10px;
+  background: url("https://raw.githubusercontent.com/perokvist/Treefort/dev/treefort.png") no-repeat top right;
 }
 
 #project_tagline {
