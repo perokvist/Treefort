@@ -305,7 +305,7 @@ Full-Width Styles
   text-shadow: #111 0px 0px 10px;
 }
 
-#project_title a:before{
+#project_title h1 a:before{
     content: "";
     display: inline-block;
     background: url("https://github.com/perokvist/Treefort/blob/dev/treefort.png") no-repeat top right;
