@@ -103,7 +103,7 @@ footer p {
 
 a {
   text-decoration: none;
-  color: #007edf;
+  color: #366A12;
   text-shadow: none;
 
   transition: color 0.5s ease;
@@ -303,7 +303,7 @@ Full-Width Styles
   font-size: 42px;
   font-weight: 700;
   text-shadow: #111 0px 0px 10px;
-  background: url("https://raw.githubusercontent.com/perokvist/Treefort/dev/treefort.png") no-repeat top right;
+  background: url("https://raw.githubusercontent.com/perokvist/Treefort/dev/treefort.png") no-repeat right;
 }
 
 #project_tagline {
