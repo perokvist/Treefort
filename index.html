@@ -2,17 +2,23 @@
 layout: default
 ---
 
+<div>
+    <p>Small infrastructure parts, for DDD/CQRS/Event sourcing. To explore and create labs.</p>
+</div>
+
 <div class="posts">
-  {% for post in site.posts %}
+    <h3>Blog posts related to Treefort</h3>
+
+    {% for post in site.posts %}
     <article class="post">    
       
-      <h1><a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a></h1>
+        <h1><a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a></h1>
 
-      <div class="entry">
-        {{ post.content | truncatewords:40}}
-      </div>
+        <div class="entry">
+            {{ post.content | truncatewords:40}}
+        </div>
       
-      <a href="{{ site.baseurl }}{{ post.url }}" class="read-more">Read More</a>
+        <a href="{{ site.baseurl }}{{ post.url }}" class="read-more">Read More</a>
     </article>
-  {% endfor %}
+    {% endfor %}
 </div>
