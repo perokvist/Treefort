@@ -1,4 +1,7 @@
-# Routing Commands using Azure Service Bus Sessions
+﻿---
+layout: post
+title: Routing Commands using Azure Service Bus Sessions
+---
 
 ### Introduction
 
