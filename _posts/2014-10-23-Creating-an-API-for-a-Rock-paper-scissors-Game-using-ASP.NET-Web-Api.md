@@ -12,7 +12,7 @@ As we'll find out - no, it doesn't have to, but the async nature could be benfic
 
 ## Scenario
 
-The simple RPS game only has two user interactions/commands. CreateGame (including the player one’s move) and MakeMove (player two’s move).
+The simple RPS game only has two user interactions/commands. CreateGame (including the player oneâ€™s move) and MakeMove (player twoâ€™s move).
 
 We're going to list all available games, the ones a player could participate in, and all games played (ended).
 
