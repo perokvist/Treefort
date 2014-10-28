@@ -1,7 +1,4 @@
-# Creating an API for a Rock-paper-scissors Game - using ASP.NET Web Api
-
-
-## Introduction
+﻿## Introduction
 
 In earlier posts we often used the domain for a simple rock-papers-scissors game. In this post we're going to re-use the domain and create an HTTP API. The RPS domain was created using CQRS and event sourcing.
 Will that affect the API ? 
