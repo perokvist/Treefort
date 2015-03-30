@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.30723.0
+VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Treefort.EntityFramework", "Treefort.Entity\Treefort.EntityFramework.csproj", "{6CCC8709-88B3-46FA-B1F8-4A9492699D73}"
 EndProject
@@ -16,6 +16,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Treefort.EventStore", "Treefort.EventStore\Treefort.EventStore.csproj", "{B1346D2D-B7A0-4A11-A7F9-D5CC6D4E3C7D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Treefort.Rx", "Treefort.Rx\Treefort.Rx.csproj", "{AFF82521-50E1-4316-806E-55301A37ED91}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Treefort.MessageVault", "Treefort.MessageVault\Treefort.MessageVault.csproj", "{4B950EA9-C325-4D9B-B287-1907C25D7746}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -47,6 +49,10 @@ Global
 		{AFF82521-50E1-4316-806E-55301A37ED91}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AFF82521-50E1-4316-806E-55301A37ED91}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AFF82521-50E1-4316-806E-55301A37ED91}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4B950EA9-C325-4D9B-B287-1907C25D7746}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4B950EA9-C325-4D9B-B287-1907C25D7746}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4B950EA9-C325-4D9B-B287-1907C25D7746}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4B950EA9-C325-4D9B-B287-1907C25D7746}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

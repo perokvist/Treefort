@@ -11,7 +11,7 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>$description$</description>
     <releaseNotes>New routing and dispatching</releaseNotes>
-    <copyright>Copyright 2014</copyright>
+    <copyright>Copyright 2015</copyright>
     <tags>Infrastructure, CQRS, DDD, Event sourcing</tags>
     <iconUrl>https://raw.githubusercontent.com/perokvist/Treefort/dev/treefort.png</iconUrl>
   </metadata>
