@@ -7,6 +7,7 @@ namespace Treefort.CommitLog
 {
     public static class StateEventHandler
     {
+
         public static async Task ForAsync<TState, TEvent>(TEvent @event,
            IStateRepository<TState> repository)
             where TEvent : IEvent

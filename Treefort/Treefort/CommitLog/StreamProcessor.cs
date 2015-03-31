@@ -1,4 +1,5 @@
 using System;
+using System.CodeDom;
 using System.Threading;
 using System.Threading.Tasks;
 using Treefort.Events;
@@ -31,35 +32,82 @@ namespace Treefort.CommitLog
                 return Task.FromResult(0);
             };
 
-            Run(token, adapter);
+            Run(token, adapter, exception => { throw exception; }, () => { });
         }
 
-        public async void Run(CancellationToken token, Func<IEvent, Task> dispatcher)
+        public void Run(CancellationToken token, IObserver<IEvent> observer)
+        {
+            Run(token, e => observer.OnNext(e), observer.OnError, observer.OnCompleted);
+        }
+
+        public void Run(CancellationToken token, Func<IEvent, Task> dispatcher)
+        {
+            Run(token, dispatcher, exception => { throw exception; }, () => { });
+        }
+
+        private async void Run(CancellationToken token, Func<IEvent, Task> dispatcher, Action<Exception> onError, Action onCompleted)
         {
             var current = _checkpointWriter.GetOrInitPosition();
             var reader = await _client.GetMessageReaderAsync(_stream);
 
-            Task.Factory.StartNew(() => FetchMessages(token, dispatcher, reader, current)
+            Task.Factory.StartNew(() => FetchMessages(token, dispatcher, onError, onCompleted, reader, current)
             , TaskCreationOptions.LongRunning);
         }
 
-        private async void FetchMessages(CancellationToken token, Func<IEvent, Task> dispatcher, IMessageReader reader, long from)
+        private void Run(CancellationToken token, Action<IEvent> dispatcher, Action<Exception> onError, Action onComplete)
+        {
+            Func<IEvent, Task> adapter = @event =>
+            {
+                dispatcher(@event);
+                return Task.FromResult(0);
+            };
+
+            Run(token, adapter, onError, onComplete);
+        }
+
+
+        private async void FetchMessages(CancellationToken token, Func<IEvent, Task> dispatcher, Action<Exception> onError, Action onCompleted, IMessageReader reader, long from)
         {
             var current = from;
+
             while (!token.IsCancellationRequested)
             {
-                var result = await reader.GetMessagesAsync(token, current, 500);
+                IMessageResult result;
+                try
+                {
+                    result = await reader.GetMessagesAsync(token, current, 500);
+                }
+                catch (Exception e)
+                {
+                    onError(e);
+                    token.WaitHandle.WaitOne(1000 * 20);
+                    continue;
+                }
+
                 if (result.HasMessages())
                 {
                     foreach (var message in result.Messages)
                     {
-                        _infoLogger("Got message");
-                        await dispatcher(_deserializer(message.Value));
+                        _infoLogger(string.Format("Received message {1} on stream {0}", _stream, message));
+                        IEvent @event;
+                        try
+                        {
+                            @event = _deserializer(message.Value);
+                        }
+                        catch (Exception e)
+                        {
+                            onError(e);
+                            continue;
+                        }
+                        await dispatcher(@event);
                     }
                     current = result.NextOffset;
                     _checkpointWriter.Update(current);
                 }
             }
+
+            onCompleted();
+
         }
     }
 }

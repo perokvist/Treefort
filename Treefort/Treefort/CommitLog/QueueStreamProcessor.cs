@@ -18,7 +18,7 @@ namespace Treefort.CommitLog
             _deserializer = deserializer;
         }
 
-        public async Task RunAsync(CancellationToken token, Func<IEvent, Task> dispatcher)
+        public async void Run(CancellationToken token, Func<IEvent, Task> dispatcher)
         {
             var reader = await _client.GetMessageReaderAsync(_stream);
             var pump = reader.CreatePump(token, 0, 100000, 0);
