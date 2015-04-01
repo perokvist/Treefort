@@ -6,6 +6,8 @@ A Collection of small infrastructure parts, for DDD/CQRS/ES/Microservices. To ex
 
 [MyGet Feed](https://www.myget.org/F/treefort/ "MyGet feed") for beta builds.
 
+[MS-PL](http://opensource.org/licenses/MS-PL "MS-PL") license.
+
 ## ApplicationServer
 
 When using Treefort in a non distributed scenario, like in app, the ApplicationServer is your starting point.
