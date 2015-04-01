@@ -1,8 +1,8 @@
 #Treefort
 
-Small infrastructure parts, for DDD/CQRS/Event sourcing. To explore and create labs.
+A Collection of small infrastructure parts, for DDD/CQRS/ES/Microservices. To explore and learn. Not for production. 
 
-**Current release 0.3.0-beta** on dev branch.
+**Current release 0.3.x-beta** on dev branch.
 
 [MyGet Feed](https://www.myget.org/F/treefort/ "MyGet feed") for beta builds.
 
